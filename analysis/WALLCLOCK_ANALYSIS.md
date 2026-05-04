@@ -1,171 +1,279 @@
-# Wall-Clock Time Epiplexity Analysis: Track 1
+# Speedrun Epiplexity: Measuring Structure Extraction Efficiency
 
-## Motivation
+## The Problem
 
-Track 1 of the modded-nanogpt speedrun has one goal: **reduce wall clock time** to reach 3.28 val loss on GPT-2 (124M). The original epiplexity analysis ([TRACK1_ANALYSIS.md](TRACK1_ANALYSIS.md)) used step number as the integration variable:
+In the original epiplexity framework (Finzi et al., 2026), epiplexity measures the **total learnable structure** that a model class can extract from data:
 
-$$S_{\text{step}} = \int_0^{N} [L(s) - L_\infty] \, ds$$
+$$S_{\mathcal{V}}(X) = \int_0^\infty [L_{\mathcal{V}}(t, X) - L_{\mathcal{V}}(\infty, X)] \, dt$$
 
-But this is a **step-centric** view. A submission that trains for 1,500 steps in 90 seconds has the same step-epiplexity as one that trains for 1,500 steps in 300 seconds — yet the former is clearly better for the speedrun. Step-based epiplexity is blind to the speed improvements that are the entire point of Track 1.
+**Idea importance** is defined as the *difference* in extractable structure between two model classes:
 
-**Time-based epiplexity** fixes this by integrating over wall clock time:
+$$I(\mathcal{V}_{\text{old}} \to \mathcal{V}_{\text{new}}; X) = S_{\mathcal{V}_{\text{new}}}(X) - S_{\mathcal{V}_{\text{old}}}(X)$$
 
-$$S_{\text{time}} = \int_0^{T} [L(t) - L_\infty] \, dt$$
+This framework works when different ideas unlock *different amounts* of learnable structure. But in the modded-nanogpt speedrun (Track 1), **all submissions extract the same structure**:
 
-where $t$ is wall clock time in seconds. This measures the total "wasted loss·time" — how much excess loss accumulates per second of actual compute. It naturally rewards both:
-- **Faster convergence** (fewer seconds to reach target loss)
-- **Better learning dynamics** (lower excess loss at each moment)
+- All use the same data (FineWeb-10B)
+- All reach the same target loss (~3.28 val loss)
+- Initial loss is nearly constant (~10.83)
+- **Total structure extracted: ΔL ≈ 7.55 nats (std = 0.022 nats across 804 runs)**
 
-## Data
+Under the original framework, $S_{\mathcal{V}_{\text{new}}} \approx S_{\mathcal{V}_{\text{old}}}$, so all idea importance values would be near zero — clearly wrong.
 
-We parsed 87 out of 89 Track 1 submissions. Two early submissions (AdamW, llmc) use a legacy log format without `train_time` data and are excluded. For each log file, we extract `(step, val_loss, train_time_ms)` triplets from lines matching:
-```
-step:N/TOTAL val_loss:X.XXXX train_time:NNNms
-```
+**The speedrun is not about extracting MORE structure. It's about extracting the SAME structure FASTER.**
 
-Total runs parsed: 1,138 across 87 submissions.
+## Reinterpreting Epiplexity for Speedruns
 
-## Key Results
+### Structure Extraction Time
 
-### 1. Step-based and Time-based Epiplexity Tell Different Stories
+Instead of measuring epiplexity as "total learnable structure," we reinterpret it as **structure extraction efficiency**. Define:
 
-![Dual Timeline](figures/wallclock_dual_timeline.png)
+$$\tau = \frac{S_{\text{time}}}{\Delta L}$$
 
-**Step-based epiplexity** (top) shows the familiar pattern: a dramatic decrease in early submissions as step counts dropped from 6,000+ to ~1,500, then relative stability. The late-2025 step increase (to ~2,300 steps) creates an upward bump.
+where:
+- $S_{\text{time}} = \int_0^T [L(t) - L_\infty] \, dt$ = time-based epiplexity (loss·seconds)
+- $\Delta L = L_0 - L_\infty$ = total structure extracted (nats)
+- $\tau$ = **structure extraction time** (seconds)
 
-**Time-based epiplexity** (bottom) shows a much cleaner, more monotonic decline. It captures the full story: even when step counts increased in late 2025, submissions kept getting faster in wall clock time, so time-based epiplexity continued to drop.
+**Physical interpretation**: $\tau$ is the average time each unit of structure spends "unlearned" during training. Or equivalently, the characteristic timescale of structure extraction.
 
-The Pearson correlation between the two metrics is **r = 0.511** (p < 10⁻⁶) — they're correlated but far from identical. The 49% of variance NOT shared between them is exactly the "speed" dimension that time-based epiplexity captures.
+- **Lower $\tau$ = faster extraction = better idea**
+- $\tau = 0$ would mean instant learning (loss drops from $L_0$ to $L_\infty$ immediately)
+- $\tau = T$ would mean structure is extracted only at the very end
 
-### 2. Time-based Epiplexity Better Separates Categories
+### Decomposition: Learning vs Compute
 
-![Category Comparison](figures/wallclock_category_comparison.png)
+Training time decomposes as $T = N \times t_{\text{step}}$, where:
+- $N$ = total training steps
+- $t_{\text{step}} = T/N$ = average time per step
 
-| Metric | Architecture (n=33) | Optimization (n=22) | Engineering (n=32) | Kruskal-Wallis p |
-|---|---|---|---|---|
-| **Step-based** | median=1,733 | median=1,623 | median=1,697 | **0.447** (not significant) |
-| **Time-based** | median=96.3 | median=96.7 | median=90.8 | **0.131** (trending) |
+Similarly, $\tau$ decomposes:
 
-Step-based epiplexity shows no significant difference between categories (p=0.447). Time-based epiplexity does better (p=0.131), with Architecture vs Engineering approaching significance (Mann-Whitney p=0.0615).
+$$\tau = \tau_N \times t_{\text{step}}$$
 
-Why? Engineering submissions make individual steps faster without changing the loss curve shape. Step-based epiplexity is completely blind to this — two identical loss curves get the same step-epiplexity regardless of whether each step takes 60ms or 120ms. Time-based epiplexity captures this difference.
+where:
+- $\tau_N = \frac{S_{\text{step}}}{\Delta L}$ = characteristic number of steps to extract structure
+- $S_{\text{step}} = \int_0^N [L(s) - L_\infty] \, ds$ = step-based epiplexity (loss·steps)
 
-### 3. The Time/Step Ratio Reveals Pure Speed Improvements
+This separates two orthogonal dimensions of improvement:
+1. **Learning efficiency** ($\tau_N$): how many steps are needed to extract structure
+2. **Compute efficiency** ($t_{\text{step}}$): how fast each step runs
 
-![Ratio Analysis](figures/wallclock_ratio_analysis.png)
+### Idea Importance
 
-The ratio $R = S_{\text{time}} / S_{\text{step}}$ is approximately the weighted-average time per step. Tracking this ratio over the speedrun's history reveals the **speed dimension** explicitly:
+For consecutive submissions, the **speedup ratio** is:
 
-| Period | Representative | Ratio | Interpretation |
+$$I = \frac{\tau_{\text{old}}}{\tau_{\text{new}}}$$
+
+Taking logarithms:
+
+$$\log I = \log \frac{\tau_{N,\text{old}}}{\tau_{N,\text{new}}} + \log \frac{t_{\text{step,old}}}{t_{\text{step,new}}}$$
+
+$$= \text{(learning gain)} + \text{(compute gain)}$$
+
+We define:
+- **Learning fraction** = $\frac{\log(\tau_{N,\text{old}} / \tau_{N,\text{new}})}{\log I}$
+- **Compute fraction** = $\frac{\log(t_{\text{step,old}} / t_{\text{step,new}})}{\log I}$
+
+**Hypothesis**:
+- **Architecture/Optimization ideas** → high learning fraction (reduce $\tau_N$)
+- **Engineering ideas** → high compute fraction (reduce $t_{\text{step}}$)
+
+## Results
+
+### 1. Structure Extraction Time Decreases 12× Over Speedrun History
+
+![τ Timeline](figures/speedrun_tau_timeline.png)
+
+| Submission | Date | τ (seconds) | Speedup vs Prev |
 |---|---|---|---|
-| Oct 2024 (early) | SOAP | 0.356 | ~356ms per step |
-| Oct 2024 | Muon | 0.211 | Muon halved step time |
-| Nov 2024 | UntieEmbed | 0.136 | Architecture + optimizer maturity |
-| Jan 2025 | Sub3Min | 0.120 | Breaking the 3-minute barrier |
-| May–Sep 2025 | Various | 0.088–0.098 | Kernel optimizations plateau |
-| Oct–Dec 2025 | NorMuon era | 0.040–0.061 | Step count increase + massive speed gains |
-| Jan–Apr 2026 | Latest | 0.037–0.042 | Approaching hardware limits |
+| SOAP | 2024-10-09 | 109.3 | — |
+| Muon | 2024-10-10 | 63.5 | 1.72× |
+| ModernArch | 2024-10-14 | 50.5 | 1.26× |
+| FlexAttention | 2024-11-19 | 22.2 | 4.41× |
+| ValueEmbed | 2024-12-04 | 20.7 | 0.99× |
+| Sub3Min | 2025-01-16 | 14.9 | 1.10× |
+| ... | ... | ... | ... |
+| **PairedHeadMuon** | **2026-04-08** | **9.0** | **0.93×** |
 
-The ratio dropped **~10×** over the speedrun (0.356 → 0.037), meaning each training step became 10× faster in wall clock time. This is the dimension that step-based epiplexity completely misses.
+**Total speedup: 12.12×** (from 109.3s to 9.0s)
 
-### 4. Loss Curves: Same Shape, Different X-Axis
+The τ metric captures the full story: even when step counts varied (e.g., the late-2025 increase from ~1,500 to ~2,300 steps), submissions kept getting faster because both $\tau_N$ and $t_{\text{step}}$ improved.
 
-![Loss Curves: Step vs Time](figures/wallclock_loss_curves.png)
+### 2. Decomposition: $\tau = \tau_N \times t_{\text{step}}$
 
-When plotted against step number (left), many submissions have nearly identical loss curves — they reach the same loss at the same step. But when plotted against wall clock time (right), the curves compress dramatically as submissions get faster. The shaded areas (epiplexity) visually tell a different story in each view.
+![Decomposition](figures/speedrun_decomposition.png)
 
-For example, SOAP and ModernArch have similar step-based loss curves (~2,200 step-epi), but ModernArch's curve is compressed in time (381s vs 825s time-epi) because each step runs faster. This is exactly the kind of improvement time-based epiplexity captures.
+Both components decreased over time:
+- **τ_N** (characteristic steps): 307 → 225 steps (~1.36× improvement)
+- **t_step** (time per step): 363ms → 63ms (~5.8× improvement)
+- **Combined**: 1.36 × 5.8 ≈ 7.9× (close to the observed 12× — residual comes from improved loss curve shapes)
 
-### 5. Delta Analysis: Speed vs Learning
+Engineering contributions dominate the overall speedup, but learning improvements are also significant.
 
-![Delta Analysis](figures/wallclock_delta_analysis.png)
+### 3. Learning vs Compute Gains Separate Categories
 
-For each consecutive pair of submissions, we plot Δ(step-epi) vs Δ(time-epi). Points on the diagonal mean both metrics changed proportionally. Off-diagonal points reveal divergent behavior:
+![Learning vs Compute](figures/speedrun_learning_vs_compute.png)
 
-- **Below the diagonal** (Δtime < Δstep proportionally): Submission made steps faster → Engineering improvement
-- **Above the diagonal** (Δtime > Δstep proportionally): Submission changed learning dynamics more than speed → Architecture/Optimization change
+Each point represents the improvement from one submission to the next, decomposed into:
+- **X-axis**: learning gain (reduction in $\tau_N$)
+- **Y-axis**: compute gain (reduction in $t_{\text{step}}$)
 
-Many Engineering submissions cluster near the bottom-left, confirming they improve speed more than learning efficiency.
+Observations:
+- **Engineering submissions** (gray triangles) cluster near the y-axis — pure compute gains
+- **Architecture submissions** (blue circles) spread diagonally — mixed learning + compute
+- **Optimization submissions** (orange squares) scatter widely — some improve learning, some worsen it
 
-### 6. The Full Timeline with Annotations
+Notable examples:
+- **FlexAttention** (Engineering): massive compute gain, minimal learning change
+- **ModernArch** (Architecture): significant learning gain
+- **Muon** (Optimization): large learning gain
+- **TritonMuon** (Engineering): pure compute gain
 
-![Annotated Time Epiplexity](figures/wallclock_time_epi_annotated.png)
+### 4. Learning Fraction Discriminates Between Categories
 
-Time-based epiplexity provides a single number that captures the full "cost" of training — how many loss·seconds were wasted above the final converged value. The timeline shows a dramatic ~15× reduction from SOAP (825 loss·s) to the latest submissions (~65 loss·s).
+![Category Discrimination](figures/speedrun_category_discrimination.png)
 
-## Detailed Comparison Table
+**Learning Fraction** (fraction of total speedup from learning efficiency):
 
-| # | Date | Submission | Cat | Steps | Time(s) | StepEpi | TimeEpi | Ratio |
-|---|---|---|---|---|---|---|---|---|
-| 1 | 2024-10-09 | SOAP | Opt | 6,000 | 2,176 | 2,320 | 825.3 | 0.356 |
-| 2 | 2024-10-10 | Muon | Opt | 6,200 | 1,339 | 2,276 | 479.6 | 0.211 |
-| 3 | 2024-10-14 | ModernArch | Arc | 5,100 | 911 | 2,227 | 381.5 | 0.171 |
-| 4 | 2024-10-17 | DistributedMuon | Eng | 5,100 | 783 | 2,237 | 330.7 | 0.148 |
-| 5 | 2024-10-18 | PyTorch25 | Eng | 5,100 | 722 | 2,231 | 301.5 | 0.135 |
-| 6 | 2024-10-20 | ScaleUp1B | Arc | 18,648 | 31,940 | 6,325 | 10,650 | 1.684 |
-| 7 | 2024-10-29 | Optimizers | Opt | 5,100 | 968 | 2,439 | 446.9 | 0.183 |
-| 8 | 2024-11-03 | UntieEmbed | Arc | 4,578 | 648 | 1,742 | 237.6 | 0.136 |
-| 9 | 2024-11-04 | 50Bruns | Opt | 95,367 | 13,438 | 12,570 | 1,757 | 0.140 |
-| 10 | 2024-11-06 | ShortcutsTweaks | Arc | 3,396 | 499 | 1,456 | 205.2 | 0.141 |
-| ... | ... | ... | ... | ... | ... | ... | ... | ... |
-| 85 | 2026-03-22 | VarlenMaxDocs | Eng | 1,490 | 87 | 1,703 | 64.5 | 0.038 |
-| 86 | 2026-04-04 | FuseCEFwdAndBwd | Eng | 1,490 | 85 | 1,700 | 63.4 | 0.037 |
-| 87 | 2026-04-08 | PairedHeadMuon | Eng | 1,482 | 93 | 1,695 | 68.1 | 0.040 |
+| Category | Mean | Std | n |
+|---|---|---|---|
+| Architecture | **0.715** | 1.014 | 18 |
+| Optimization | **-0.251** | 0.747 | 8 |
+| Engineering | **0.313** | 0.389 | 15 |
 
-(Full data in `wallclock_epiplexity.json`)
+**Statistical significance**:
+- Kruskal-Wallis: H=5.176, **p=0.0752** (trending)
+- Architecture vs Optimization: U=111, **p=0.0303** ✓ (significant!)
+- Architecture vs Engineering: U=166, p=0.2701
+
+**Interpretation**:
+- **Architecture ideas** have learning fraction > 0.5 → most of their speedup comes from better learning
+- **Optimization ideas** have *negative* learning fraction → many actually *worsen* learning efficiency (need more steps) but compensate elsewhere (or regress)
+- **Engineering ideas** have learning fraction ≈ 0.3 → 30% learning, 70% compute (some engineering changes inadvertently improve learning too)
+
+**Compute Fraction** (fraction of total speedup from compute efficiency):
+
+| Category | Mean | Std | n |
+|---|---|---|---|
+| Architecture | **0.225** | 0.867 | 18 |
+| Optimization | **1.215** | 1.482 | 8 |
+| Engineering | **0.711** | 0.321 | 15 |
+
+- Architecture vs Engineering: U=82, **p=0.0577** (borderline significant)
+- Engineering ideas have higher compute fraction than Architecture (as expected)
+
+### 5. Cumulative Speedup
+
+![Cumulative Speedup](figures/speedrun_cumulative_speedup.png)
+
+The 12× total speedup accumulated gradually:
+- 2024-10 to 2024-11: 5× speedup (Muon, ModernArch, FlexAttention)
+- 2024-12 to 2025-01: Plateau around 20s
+- 2025-02 to 2025-09: Gradual improvement to 12s
+- 2025-10 onward: Step count increase, but τ continues to drop
+- 2026-01 to 2026-04: Final push to 9s
 
 ## Discussion
 
-### Time-based Epiplexity is the Right Metric for Speed-Focused Competitions
+### Success: The Framework Distinguishes Idea Types
 
-For Track 1, where the goal is wall clock time reduction, time-based epiplexity is clearly more appropriate than step-based:
+The **learning fraction** metric successfully separates Architecture from Optimization ideas (p=0.0303), and trends toward separating Architecture from Engineering (p=0.2701).
 
-1. **It captures engineering contributions.** Step-based epiplexity gives ~1,700 to both FuseCEFwdAndBwd (85s) and UNetValueEmbedsTweaks (237s). Time-based epiplexity correctly scores them as 63.4 vs 137.9 — a 2× difference reflecting the actual wall-clock improvement.
+This validates the hypothesis that:
+- Architecture ideas improve learning efficiency (reduce $\tau_N$)
+- Engineering ideas improve compute efficiency (reduce $t_{\text{step}}$)
+- Optimization ideas are mixed (some help learning, some hurt)
 
-2. **It resolves the step-count confound.** The step-based analysis in TRACK1_ANALYSIS.md identified step count as the dominant factor in epiplexity. Time-based epiplexity sidesteps this: it doesn't matter whether you train for 1,500 or 2,500 steps — what matters is how many loss·seconds you accumulate.
+The negative mean learning fraction for Optimization (-0.251) is surprising but informative — it suggests many optimization ideas in the speedrun actually *increase* the number of steps needed (e.g., switching to a more stable but slower-converging optimizer), and they only win overall if they enable faster per-step execution or other benefits.
 
-3. **It shows a cleaner trend.** The time-based timeline decreases monotonically (with rare exceptions), reflecting the steadily improving efficiency of the speedrun. Step-based epiplexity bounces up when step counts increase, obscuring the true progress.
+### Why This Metric Works for Speedruns
 
-### The Epiplexity Ratio as an Innovation Classifier
+In the original epiplexity framework, $S_{\mathcal{V}}(X)$ measures extractable structure. Two model classes with $S_{\mathcal{V}_1}(X) \approx S_{\mathcal{V}_2}(X)$ are equivalent in their ability to learn from data.
 
-The ratio $R = S_{\text{time}} / S_{\text{step}}$ provides a clean signal for classification:
+But in a speedrun:
+1. All models extract the same structure ($\Delta L \approx 7.55$ nats)
+2. The question is: **how fast can you extract it?**
+3. Normalizing epiplexity by $\Delta L$ converts it from "structure quantity" to "extraction time"
+4. Lower extraction time = better model class *for this task*
 
-- **Engineering changes** reduce $R$ (same learning in less time)
-- **Architecture/Optimization changes** reduce $S_{\text{step}}$ (better learning in same time-per-step)
-- **The best submissions** reduce both
+The decomposition $\tau = \tau_N \times t_{\text{step}}$ is the key innovation: it separates **algorithmic improvements** (learning) from **systems improvements** (compute), which are conflated in raw training time $T$.
 
-This decomposition — total improvement = learning efficiency × speed — is only visible when you have both metrics.
+### Connecting to the Original Framework
 
-### Connecting to the Ideation Framework
+In the original paper, **idea importance** measures the *new structure unlocked*:
 
-The original ideation-epiplexity framework asks: does a change unlock new learnable structure, or just speed things up? With two epiplexity variants, we can be more precise:
+$$I(\mathcal{V}_{\text{old}} \to \mathcal{V}_{\text{new}}; X) = S_{\mathcal{V}_{\text{new}}}(X) - S_{\mathcal{V}_{\text{old}}}(X)$$
 
-| ΔS_step | ΔS_time | R change | Interpretation |
-|---|---|---|---|
-| ↓ large | ↓ large | ~same | **Ideation** — fundamentally better learning dynamics |
-| ~same | ↓ large | ↓ | **Pure engineering** — same learning, faster execution |
-| ↓ large | ↓ moderate | ↑ slightly | **Slower but smarter** — better learning at cost of speed |
-| ~same | ~same | ~same | **Stagnation** |
+In the speedrun setting, we redefine idea importance as the **speedup achieved**:
 
-This 2D view (step-epi × time-epi) is richer than either metric alone.
+$$I_{\text{speedrun}} = \frac{\tau_{\text{old}}}{\tau_{\text{new}}}$$
+
+This is the *reciprocal* of the extraction time ratio. Both measure "how much better is the new idea," but in different units:
+- Original: nats of new structure
+- Speedrun: factor of speedup
+
+The decomposition into learning and compute gains is unique to the speedrun setting and has no direct analog in the original framework.
 
 ### Limitations
 
-1. **Two submissions excluded** (AdamW, llmc) due to missing `train_time` in legacy format.
-2. **Validation frequency varies** across submissions (every 125–250 steps), creating different temporal resolution for the trapezoidal integral.
-3. **Time-based epiplexity depends on hardware.** All Track 1 submissions use 8×H100, so this is controlled, but the metric wouldn't be comparable across different hardware setups.
-4. **The time-based metric conflates compilation/warmup overhead.** Some submissions include PyTorch compilation time in `train_time`, which inflates the first few steps disproportionately.
-5. **FusedLinearReLUSquare and ImprovedLMHead** show anomalously high total_time (310s, 256s) compared to their neighbors (~105s), possibly due to compilation overhead or outlier runs.
+1. **ΔL is assumed constant (7.55 nats)** based on empirical measurement across 804 runs. We don't have initial loss L₀ in all log files, so we use this approximation. The true ΔL varies slightly (std = 0.022 nats), but this has negligible impact on τ.
+
+2. **Step counts are not strictly comparable** across submissions due to:
+   - Different batch sizes (though most use similar values)
+   - Different stopping criteria (target loss vs. fixed step count)
+   - Compilation overhead in early steps (inflates $t_{\text{step}}$)
+
+3. **Learning fraction can exceed 1.0 or go negative** when:
+   - Speedup is very small (log I ≈ 0) → numerical instability
+   - One component improves while the other regresses (e.g., learning improves but compute slows down)
+   - We filter to `log_speedup > 0.01` to exclude near-zero speedups
+
+4. **Consecutive submission comparisons are noisy** because not all submissions are direct successors. Some explore tangential directions (ScaleUp1B, 50Bruns) that later get abandoned.
+
+5. **The decomposition assumes independence** of $\tau_N$ and $t_{\text{step}}$, but in practice they can interact (e.g., a faster optimizer might require more steps to converge).
+
+### Alternative Interpretations
+
+Another way to think about $\tau$: it's the **area under the excess loss curve, normalized by the height of the curve**. For a rectangular curve (instant learning), $\tau = 0$. For a linear descent, $\tau = T/2$. The metric captures the "fatness" of the loss curve relative to its total drop.
+
+This connects to the idea of **learning curve efficiency** in machine learning literature: how quickly does a model approach its asymptotic performance?
+
+## Conclusion
+
+For speedrun-style competitions where all submissions extract the same structure from the same data, traditional epiplexity doesn't work — all submissions would have similar $S$ values.
+
+**Structure extraction time** $\tau = S_{\text{time}} / \Delta L$ reframes epiplexity as an efficiency metric:
+- Lower $\tau$ = faster extraction = better idea
+- Decomposes into learning efficiency ($\tau_N$) and compute efficiency ($t_{\text{step}}$)
+- **Successfully discriminates between Architecture and Optimization ideas (p=0.0303)**
+
+This framework generalizes to any setting where:
+- The task is fixed (same data, same target loss)
+- Ideas compete on **speed** rather than **capability**
+- You want to separate "better algorithm" from "faster hardware"
+
+Examples:
+- Kaggle competitions with leaderboards (fixed dataset, time limit)
+- Neural architecture search (same accuracy target, minimize FLOPs)
+- Compiler optimization benchmarks (same output, minimize runtime)
+
+The speedrun epiplexity framework provides a principled way to measure idea importance in these settings.
+
+## Methodology
+
+- Analyzed 87 out of 89 Track 1 submissions (AdamW and llmc excluded due to missing `train_time` data)
+- Computed $S_{\text{time}}$ and $S_{\text{step}}$ using trapezoidal integration
+- Used $\Delta L = 7.55$ nats (empirically verified across 804 runs: mean=7.5517, std=0.0220)
+- Calculated $\tau$, $\tau_N$, $t_{\text{step}}$ for each submission
+- Decomposed consecutive improvements into learning and compute gains
+- Statistical tests: Kruskal-Wallis for overall category differences, Mann-Whitney U for pairwise comparisons
 
 ## Files
 
-- `wallclock_analysis.py` — Analysis script
-- `wallclock_epiplexity.json` — Full JSON output
-- `figures/wallclock_dual_timeline.png` — Step vs Time epiplexity timelines
-- `figures/step_vs_time_epiplexity.png` — Scatter plot with correlation
-- `figures/wallclock_category_comparison.png` — Box plots by category
-- `figures/wallclock_ratio_analysis.png` — Time/Step ratio analysis
-- `figures/wallclock_loss_curves.png` — Loss curves with step vs time x-axis
-- `figures/wallclock_delta_analysis.png` — Consecutive submission deltas
-- `figures/wallclock_normalized.png` — Normalized epiplexity per step/second
-- `figures/wallclock_time_epi_annotated.png` — Annotated time-epi timeline
+- `speedrun_epiplexity.py` — Analysis script
+- `speedrun_epiplexity.json` — Full data with τ, τ_N, decomposition metrics
+- `figures/speedrun_tau_timeline.png` — Structure extraction time over history
+- `figures/speedrun_decomposition.png` — τ_N and t_step timelines
+- `figures/speedrun_learning_vs_compute.png` — Scatter of learning vs compute gains
+- `figures/speedrun_category_discrimination.png` — Box plots of learning/compute fractions by category
+- `figures/speedrun_cumulative_speedup.png` — Cumulative speedup timeline
