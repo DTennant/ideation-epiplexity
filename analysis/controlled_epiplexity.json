@@ -1,0 +1,889 @@
+{
+  "config": {
+    "step_budget": 1000,
+    "time_budget_s": 90.0,
+    "reference_loss": 3.28
+  },
+  "results": [
+    {
+      "dirname": "2024-06-06_AdamW",
+      "date": "2024-06-06",
+      "label": "AdamW",
+      "category": "Optimization",
+      "step_epi": 1735.2656190000005,
+      "time_epi": null,
+      "n_val_points": 76,
+      "max_step": 9536
+    },
+    {
+      "dirname": "2024-10-09_SOAP",
+      "date": "2024-10-09",
+      "label": "SOAP",
+      "category": "Optimization",
+      "step_epi": 1399.4187500000003,
+      "time_epi": 299.66568816923325,
+      "n_val_points": 49,
+      "max_step": 6000
+    },
+    {
+      "dirname": "2024-10-10_Muon",
+      "date": "2024-10-10",
+      "label": "Muon",
+      "category": "Optimization",
+      "step_epi": 1330.3187500000004,
+      "time_epi": 199.90126187864215,
+      "n_val_points": 51,
+      "max_step": 6200
+    },
+    {
+      "dirname": "2024-10-14_ModernArch",
+      "date": "2024-10-14",
+      "label": "ModernArch",
+      "category": "Architecture",
+      "step_epi": 1523.18125,
+      "time_epi": 212.34820471778954,
+      "n_val_points": 42,
+      "max_step": 5100
+    },
+    {
+      "dirname": "2024-10-17_DistributedMuon",
+      "date": "2024-10-17",
+      "label": "DistributedMuon",
+      "category": "Engineering",
+      "step_epi": 1529.3000000000002,
+      "time_epi": 191.90893265131052,
+      "n_val_points": 42,
+      "max_step": 5100
+    },
+    {
+      "dirname": "2024-10-18_PyTorch25",
+      "date": "2024-10-18",
+      "label": "PyTorch25",
+      "category": "Engineering",
+      "step_epi": 1526.2187500000005,
+      "time_epi": 178.00670489833772,
+      "n_val_points": 42,
+      "max_step": 5100
+    },
+    {
+      "dirname": "2024-10-20_ScaleUp1B",
+      "date": "2024-10-20",
+      "label": "ScaleUp1B",
+      "category": "Architecture",
+      "step_epi": 1878.7062500000006,
+      "time_epi": 1379.701545339859,
+      "n_val_points": 164,
+      "max_step": 20344
+    },
+    {
+      "dirname": "2024-10-29_Optimizers",
+      "date": "2024-10-29",
+      "label": "Optimizers",
+      "category": "Optimization",
+      "step_epi": 1508.3375000000003,
+      "time_epi": 176.8075120288888,
+      "n_val_points": 42,
+      "max_step": 5100
+    },
+    {
+      "dirname": "2024-11-03_UntieEmbed",
+      "date": "2024-11-03",
+      "label": "UntieEmbed",
+      "category": "Architecture",
+      "step_epi": 1142.4750000000001,
+      "time_epi": 130.59826404604033,
+      "n_val_points": 38,
+      "max_step": 4578
+    },
+    {
+      "dirname": "2024-11-04_50Bruns",
+      "date": "2024-11-04",
+      "label": "50Bruns",
+      "category": "Optimization",
+      "step_epi": 1156.1437500000002,
+      "time_epi": 132.4004677016336,
+      "n_val_points": 764,
+      "max_step": 95367
+    },
+    {
+      "dirname": "2024-11-06_ShortcutsTweaks",
+      "date": "2024-11-06",
+      "label": "ShortcutsTweaks",
+      "category": "Architecture",
+      "step_epi": 1142.4750000000001,
+      "time_epi": 130.59826404604033,
+      "n_val_points": 38,
+      "max_step": 4578
+    },
+    {
+      "dirname": "2024-11-08_CastBf16",
+      "date": "2024-11-08",
+      "label": "CastBf16",
+      "category": "Engineering",
+      "step_epi": 1074.59375,
+      "time_epi": 126.2531131127823,
+      "n_val_points": 27,
+      "max_step": 3242
+    },
+    {
+      "dirname": "2024-11-09_Replicateleloykun",
+      "date": "2024-11-09",
+      "label": "Replicateleloykun",
+      "category": "Optimization",
+      "step_epi": 1057.9875000000002,
+      "time_epi": 129.90942837462188,
+      "n_val_points": 26,
+      "max_step": 3125
+    },
+    {
+      "dirname": "2024-11-10_ScaleShortcuts",
+      "date": "2024-11-10",
+      "label": "ScaleShortcuts",
+      "category": "Architecture",
+      "step_epi": 1146.3812500000001,
+      "time_epi": 131.79269268780712,
+      "n_val_points": 154,
+      "max_step": 19073
+    },
+    {
+      "dirname": "2024-11-10_UNetDoubleLr",
+      "date": "2024-11-10",
+      "label": "UNetDoubleLr",
+      "category": "Architecture",
+      "step_epi": 1040.3000000000002,
+      "time_epi": 122.0904150672794,
+      "n_val_points": 25,
+      "max_step": 3000
+    },
+    {
+      "dirname": "2024-11-14_QuantizedFP4",
+      "date": "2024-11-14",
+      "label": "QuantizedFP4",
+      "category": "Architecture",
+      "step_epi": 1071.8375,
+      "time_epi": 126.3017783030099,
+      "n_val_points": 154,
+      "max_step": 19073
+    },
+    {
+      "dirname": "2024-11-19_FlexAttention",
+      "date": "2024-11-19",
+      "label": "FlexAttention",
+      "category": "Engineering",
+      "step_epi": 975.6062500000002,
+      "time_epi": 127.76016471880067,
+      "n_val_points": 16,
+      "max_step": 1875
+    },
+    {
+      "dirname": "2024-11-24_WindowWarmup",
+      "date": "2024-11-24",
+      "label": "WindowWarmup",
+      "category": "Architecture",
+      "step_epi": 972.4937500000003,
+      "time_epi": 121.12196593978348,
+      "n_val_points": 15,
+      "max_step": 1750
+    },
+    {
+      "dirname": "2024-12-04_ValueEmbed",
+      "date": "2024-12-04",
+      "label": "ValueEmbed",
+      "category": "Architecture",
+      "step_epi": 948.4937500000001,
+      "time_epi": 126.6813761910821,
+      "n_val_points": 14,
+      "max_step": 1530
+    },
+    {
+      "dirname": "2024-12-08_UNetValueEmbedsTweaks",
+      "date": "2024-12-08",
+      "label": "UNetValueEmbedsTweaks",
+      "category": "Architecture",
+      "step_epi": 933.8000000000002,
+      "time_epi": 116.0876595703192,
+      "n_val_points": 13,
+      "max_step": 1480
+    },
+    {
+      "dirname": "2024-12-10_MFUTweaks",
+      "date": "2024-12-10",
+      "label": "MFUTweaks",
+      "category": "Engineering",
+      "step_epi": 934.9437500000001,
+      "time_epi": 117.38700682970429,
+      "n_val_points": 13,
+      "max_step": 1480
+    },
+    {
+      "dirname": "2024-12-17_SparsifyEmbeds",
+      "date": "2024-12-17",
+      "label": "SparsifyEmbeds",
+      "category": "Architecture",
+      "step_epi": 940.0750000000002,
+      "time_epi": 110.34943388682706,
+      "n_val_points": 13,
+      "max_step": 1490
+    },
+    {
+      "dirname": "2025-01-04_SoftCap",
+      "date": "2025-01-04",
+      "label": "SoftCap",
+      "category": "Architecture",
+      "step_epi": 896.4625000000001,
+      "time_epi": 107.646707611089,
+      "n_val_points": 13,
+      "max_step": 1390
+    },
+    {
+      "dirname": "2025-01-13_Fp8LmHead",
+      "date": "2025-01-13",
+      "label": "Fp8LmHead",
+      "category": "Architecture",
+      "step_epi": 899.0187500000002,
+      "time_epi": 101.45406686054679,
+      "n_val_points": 13,
+      "max_step": 1395
+    },
+    {
+      "dirname": "2025-01-16_Sub3Min",
+      "date": "2025-01-16",
+      "label": "Sub3Min",
+      "category": "Optimization",
+      "step_epi": 913.7312500000002,
+      "time_epi": 101.70562289479734,
+      "n_val_points": 13,
+      "max_step": 1393
+    },
+    {
+      "dirname": "2025-01-26_BatchSize",
+      "date": "2025-01-26",
+      "label": "BatchSize",
+      "category": "Optimization",
+      "step_epi": 1018.5625000000002,
+      "time_epi": 91.6617860434869,
+      "n_val_points": 16,
+      "max_step": 1770
+    },
+    {
+      "dirname": "2025-02-01_RuleTweak",
+      "date": "2025-02-01",
+      "label": "RuleTweak",
+      "category": "Optimization",
+      "step_epi": 1021.8125000000005,
+      "time_epi": 97.27885516386195,
+      "n_val_points": 16,
+      "max_step": 1770
+    },
+    {
+      "dirname": "2025-05-09_SkipMLPBlocks",
+      "date": "2025-05-09",
+      "label": "SkipMLPBlocks",
+      "category": "Architecture",
+      "step_epi": 927.6562500000002,
+      "time_epi": 87.06141006064271,
+      "n_val_points": 15,
+      "max_step": 1705
+    },
+    {
+      "dirname": "2025-05-24_FasterReduce",
+      "date": "2025-05-24",
+      "label": "FasterReduce",
+      "category": "Engineering",
+      "step_epi": 1021.7437500000001,
+      "time_epi": 96.62391680321332,
+      "n_val_points": 16,
+      "max_step": 1770
+    },
+    {
+      "dirname": "2025-05-24_StableTorch",
+      "date": "2025-05-24",
+      "label": "StableTorch",
+      "category": "Engineering",
+      "step_epi": 1019.9000000000002,
+      "time_epi": 97.06477269915379,
+      "n_val_points": 16,
+      "max_step": 1770
+    },
+    {
+      "dirname": "2025-05-25_EvenFasterReduce",
+      "date": "2025-05-25",
+      "label": "EvenFasterReduce",
+      "category": "Engineering",
+      "step_epi": 1019.6375000000002,
+      "time_epi": 97.49665978543818,
+      "n_val_points": 16,
+      "max_step": 1770
+    },
+    {
+      "dirname": "2025-05-25_MuonWithAuxAdamExample",
+      "date": "2025-05-25",
+      "label": "MuonWithAuxAdamExample",
+      "category": "Optimization",
+      "step_epi": 1016.5250000000002,
+      "time_epi": 98.70428316873247,
+      "n_val_points": 16,
+      "max_step": 1770
+    },
+    {
+      "dirname": "2025-05-30_noallreduce",
+      "date": "2025-05-30",
+      "label": "noallreduce",
+      "category": "Engineering",
+      "step_epi": 1016.8875,
+      "time_epi": 95.7385916718533,
+      "n_val_points": 16,
+      "max_step": 1770
+    },
+    {
+      "dirname": "2025-07-12_BosAlign",
+      "date": "2025-07-12",
+      "label": "BosAlign",
+      "category": "Architecture",
+      "step_epi": 1007.5812500000002,
+      "time_epi": 93.88734207709983,
+      "n_val_points": 15,
+      "max_step": 1750
+    },
+    {
+      "dirname": "2025-07-13_UpgradeTorch190",
+      "date": "2025-07-13",
+      "label": "UpgradeTorch190",
+      "category": "Engineering",
+      "step_epi": 1015.5062500000001,
+      "time_epi": 94.4322387922234,
+      "n_val_points": 16,
+      "max_step": 1770
+    },
+    {
+      "dirname": "2025-07-18_TritonMuon",
+      "date": "2025-07-18",
+      "label": "TritonMuon",
+      "category": "Engineering",
+      "step_epi": 1009.1375000000003,
+      "time_epi": 92.66586296826364,
+      "n_val_points": 15,
+      "max_step": 1750
+    },
+    {
+      "dirname": "2025-08-23_SparseAttnGate",
+      "date": "2025-08-23",
+      "label": "SparseAttnGate",
+      "category": "Architecture",
+      "step_epi": 999.2687500000003,
+      "time_epi": 93.33736460583795,
+      "n_val_points": 15,
+      "max_step": 1695
+    },
+    {
+      "dirname": "2025-09-03_FA3",
+      "date": "2025-09-03",
+      "label": "FA3",
+      "category": "Engineering",
+      "step_epi": 921.7937500000003,
+      "time_epi": 88.761369349186,
+      "n_val_points": 15,
+      "max_step": 1670
+    },
+    {
+      "dirname": "2025-09-05_SkipMLPBlocks",
+      "date": "2025-09-05",
+      "label": "SkipMLPBlocks",
+      "category": "Architecture",
+      "step_epi": 927.6562500000002,
+      "time_epi": 87.06141006064271,
+      "n_val_points": 15,
+      "max_step": 1705
+    },
+    {
+      "dirname": "2025-09-10_Yarn",
+      "date": "2025-09-10",
+      "label": "Yarn",
+      "category": "Engineering",
+      "step_epi": 926.7125000000001,
+      "time_epi": 87.24657158140032,
+      "n_val_points": 15,
+      "max_step": 1670
+    },
+    {
+      "dirname": "2025-09-11_VectSigmoidBFloat16",
+      "date": "2025-09-11",
+      "label": "VectSigmoidBFloat16",
+      "category": "Engineering",
+      "step_epi": 926.4875000000002,
+      "time_epi": 85.55347040121752,
+      "n_val_points": 15,
+      "max_step": 1670
+    },
+    {
+      "dirname": "2025-09-15_AsyncDataLoadAttnFinalWindow",
+      "date": "2025-09-15",
+      "label": "AsyncDataLoadAttnFinalWindow",
+      "category": "Engineering",
+      "step_epi": 922.3500000000001,
+      "time_epi": 84.5351475678744,
+      "n_val_points": 15,
+      "max_step": 1660
+    },
+    {
+      "dirname": "2025-09-18_Smear",
+      "date": "2025-09-18",
+      "label": "Smear",
+      "category": "Architecture",
+      "step_epi": 927.3,
+      "time_epi": 85.05561511257416,
+      "n_val_points": 15,
+      "max_step": 1645
+    },
+    {
+      "dirname": "2025-09-21_DropAttn",
+      "date": "2025-09-21",
+      "label": "DropAttn",
+      "category": "Architecture",
+      "step_epi": 926.1125000000002,
+      "time_epi": 83.02180115729445,
+      "n_val_points": 15,
+      "max_step": 1680
+    },
+    {
+      "dirname": "2025-09-23_MuonCustomSizing",
+      "date": "2025-09-23",
+      "label": "MuonCustomSizing",
+      "category": "Optimization",
+      "step_epi": 928.9687500000001,
+      "time_epi": 82.4571185787659,
+      "n_val_points": 15,
+      "max_step": 1680
+    },
+    {
+      "dirname": "2025-09-27_BF16CE",
+      "date": "2025-09-27",
+      "label": "BF16CE",
+      "category": "Engineering",
+      "step_epi": 924.8437500000002,
+      "time_epi": 81.49455805728071,
+      "n_val_points": 15,
+      "max_step": 1680
+    },
+    {
+      "dirname": "2025-09-29_PolarExpress",
+      "date": "2025-09-29",
+      "label": "PolarExpress",
+      "category": "Optimization",
+      "step_epi": 930.9812500000003,
+      "time_epi": 82.4282180303674,
+      "n_val_points": 15,
+      "max_step": 1670
+    },
+    {
+      "dirname": "2025-09-30_CustomBatching",
+      "date": "2025-09-30",
+      "label": "CustomBatching",
+      "category": "Engineering",
+      "step_epi": 1425.6125000000002,
+      "time_epi": 93.00215826334352,
+      "n_val_points": 11,
+      "max_step": 2420
+    },
+    {
+      "dirname": "2025-10-04_Backout",
+      "date": "2025-10-04",
+      "label": "Backout",
+      "category": "Architecture",
+      "step_epi": 1423.2375,
+      "time_epi": 92.62409100117297,
+      "n_val_points": 11,
+      "max_step": 2330
+    },
+    {
+      "dirname": "2025-10-24_NorMuon",
+      "date": "2025-10-24",
+      "label": "NorMuon",
+      "category": "Optimization",
+      "step_epi": 1408.4250000000002,
+      "time_epi": 91.87312207338945,
+      "n_val_points": 11,
+      "max_step": 2315
+    },
+    {
+      "dirname": "2025-10-27_FixMuonLR",
+      "date": "2025-10-27",
+      "label": "FixMuonLR",
+      "category": "Optimization",
+      "step_epi": 1414.4499999999998,
+      "time_epi": 92.4097637762754,
+      "n_val_points": 11,
+      "max_step": 2285
+    },
+    {
+      "dirname": "2025-10-31_AdamSyncGradientHook",
+      "date": "2025-10-31",
+      "label": "AdamSyncGradientHook",
+      "category": "Optimization",
+      "step_epi": 1408.55,
+      "time_epi": 92.81885128120558,
+      "n_val_points": 10,
+      "max_step": 2245
+    },
+    {
+      "dirname": "2025-11-10_CautiousWD",
+      "date": "2025-11-10",
+      "label": "CautiousWD",
+      "category": "Optimization",
+      "step_epi": 1409.4625000000003,
+      "time_epi": 92.90218800055464,
+      "n_val_points": 10,
+      "max_step": 2245
+    },
+    {
+      "dirname": "2025-11-18_RefineSkip",
+      "date": "2025-11-18",
+      "label": "RefineSkip",
+      "category": "Architecture",
+      "step_epi": 1442.1625000000004,
+      "time_epi": 94.04577090980399,
+      "n_val_points": 10,
+      "max_step": 2225
+    },
+    {
+      "dirname": "2025-11-29_BatchSizeSchedule",
+      "date": "2025-11-29",
+      "label": "BatchSizeSchedule",
+      "category": "Optimization",
+      "step_epi": 761.3790000000001,
+      "time_epi": 54.4550005357143,
+      "n_val_points": 446,
+      "max_step": 2225
+    },
+    {
+      "dirname": "2025-12-10_SALambdaOnWeights",
+      "date": "2025-12-10",
+      "label": "SALambdaOnWeights",
+      "category": "Architecture",
+      "step_epi": 1575.4500000000003,
+      "time_epi": 68.83089673834081,
+      "n_val_points": 10,
+      "max_step": 2160
+    },
+    {
+      "dirname": "2025-12-11_NorMuonOptimsAndFixes",
+      "date": "2025-12-11",
+      "label": "NorMuonOptimsAndFixes",
+      "category": "Optimization",
+      "step_epi": 1593.025,
+      "time_epi": 70.60019784552519,
+      "n_val_points": 10,
+      "max_step": 2160
+    },
+    {
+      "dirname": "2025-12-14_PartialKeyOffset",
+      "date": "2025-12-14",
+      "label": "PartialKeyOffset",
+      "category": "Architecture",
+      "step_epi": 1563.9625000000003,
+      "time_epi": 69.61109767887801,
+      "n_val_points": 10,
+      "max_step": 2110
+    },
+    {
+      "dirname": "2025-12-18_CautiousWDAdam",
+      "date": "2025-12-18",
+      "label": "CautiousWDAdam",
+      "category": "Optimization",
+      "step_epi": 1567.1250000000005,
+      "time_epi": 69.2910955497487,
+      "n_val_points": 10,
+      "max_step": 2090
+    },
+    {
+      "dirname": "2025-12-19_RetieLMHead",
+      "date": "2025-12-19",
+      "label": "RetieLMHead",
+      "category": "Architecture",
+      "step_epi": 1562.7375,
+      "time_epi": 68.94493970058396,
+      "n_val_points": 10,
+      "max_step": 2035
+    },
+    {
+      "dirname": "2025-12-21_SmoothedScalars",
+      "date": "2025-12-21",
+      "label": "SmoothedScalars",
+      "category": "Optimization",
+      "step_epi": 1563.0500000000002,
+      "time_epi": 69.12512365723867,
+      "n_val_points": 10,
+      "max_step": 2035
+    },
+    {
+      "dirname": "2025-12-22_MultiTokenPrediction",
+      "date": "2025-12-22",
+      "label": "MultiTokenPrediction",
+      "category": "Architecture",
+      "step_epi": 1783.4250000000002,
+      "time_epi": 80.50822774284491,
+      "n_val_points": 9,
+      "max_step": 1920
+    },
+    {
+      "dirname": "2025-12-26_LogitRescale",
+      "date": "2025-12-26",
+      "label": "LogitRescale",
+      "category": "Architecture",
+      "step_epi": 1772.4500000000003,
+      "time_epi": 79.69460370653418,
+      "n_val_points": 9,
+      "max_step": 1880
+    },
+    {
+      "dirname": "2025-12-29_VeSkipGates",
+      "date": "2025-12-29",
+      "label": "VeSkipGates",
+      "category": "Architecture",
+      "step_epi": 1777.0875,
+      "time_epi": 80.82880850424229,
+      "n_val_points": 9,
+      "max_step": 1845
+    },
+    {
+      "dirname": "2025-12-31_GatesToCompiledAdam",
+      "date": "2025-12-31",
+      "label": "GatesToCompiledAdam",
+      "category": "Optimization",
+      "step_epi": 1775.8625000000002,
+      "time_epi": 80.14150893324106,
+      "n_val_points": 9,
+      "max_step": 1845
+    },
+    {
+      "dirname": "2026-01-04_MixedPrecisionInterweavedOptimizer",
+      "date": "2026-01-04",
+      "label": "MixedPrecisionInterweavedOptimizer",
+      "category": "Optimization",
+      "step_epi": 1779.6750000000004,
+      "time_epi": 79.01279100902534,
+      "n_val_points": 9,
+      "max_step": 1840
+    },
+    {
+      "dirname": "2026-01-07_PairedHeadAttention",
+      "date": "2026-01-07",
+      "label": "PairedHeadAttention",
+      "category": "Architecture",
+      "step_epi": 1759.9250000000002,
+      "time_epi": 77.44876525373958,
+      "n_val_points": 9,
+      "max_step": 1775
+    },
+    {
+      "dirname": "2026-01-10_FusedLinearReLUSquare",
+      "date": "2026-01-10",
+      "label": "FusedLinearReLUSquare",
+      "category": "Engineering",
+      "step_epi": 1767.5000000000002,
+      "time_epi": 76.13062136423197,
+      "n_val_points": 9,
+      "max_step": 1775
+    },
+    {
+      "dirname": "2026-01-16_FusedSoftcappedEntropy",
+      "date": "2026-01-16",
+      "label": "FusedSoftcappedEntropy",
+      "category": "Engineering",
+      "step_epi": 1762.9750000000006,
+      "time_epi": 75.49448817769367,
+      "n_val_points": 9,
+      "max_step": 1775
+    },
+    {
+      "dirname": "2026-01-18_UnifiedOptimizers",
+      "date": "2026-01-18",
+      "label": "UnifiedOptimizers",
+      "category": "Optimization",
+      "step_epi": 1765.6750000000004,
+      "time_epi": 75.55099619614516,
+      "n_val_points": 9,
+      "max_step": 1775
+    },
+    {
+      "dirname": "2026-01-19_BigramHashEmbedding",
+      "date": "2026-01-19",
+      "label": "BigramHashEmbedding",
+      "category": "Architecture",
+      "step_epi": 1703.5875,
+      "time_epi": 77.6924072413984,
+      "n_val_points": 8,
+      "max_step": 1600
+    },
+    {
+      "dirname": "2026-01-24_ImprovedLMHead",
+      "date": "2026-01-24",
+      "label": "ImprovedLMHead",
+      "category": "Architecture",
+      "step_epi": 1702.0500000000002,
+      "time_epi": 306.389721935599,
+      "n_val_points": 8,
+      "max_step": 1600
+    },
+    {
+      "dirname": "2026-01-26-UntieValueEmbeddings",
+      "date": "2026-01-26-UntieValueEmbeddings",
+      "label": "",
+      "category": "Architecture",
+      "step_epi": 1694.1125000000002,
+      "time_epi": 73.455044206341,
+      "n_val_points": 8,
+      "max_step": 1575
+    },
+    {
+      "dirname": "2026-01-30_MimeticValueOutput",
+      "date": "2026-01-30",
+      "label": "MimeticValueOutput",
+      "category": "Architecture",
+      "step_epi": 1684.7875000000004,
+      "time_epi": 72.76518273928019,
+      "n_val_points": 8,
+      "max_step": 1555
+    },
+    {
+      "dirname": "2026-01-30_VeFused",
+      "date": "2026-01-30",
+      "label": "VeFused",
+      "category": "Engineering",
+      "step_epi": 1718.4125000000001,
+      "time_epi": 73.80675962465023,
+      "n_val_points": 8,
+      "max_step": 1575
+    },
+    {
+      "dirname": "2026-01-31-BigramHashH2D",
+      "date": "2026-01-31-BigramHashH2D",
+      "label": "",
+      "category": "Engineering",
+      "step_epi": 1683.3250000000003,
+      "time_epi": 71.82311424962349,
+      "n_val_points": 8,
+      "max_step": 1555
+    },
+    {
+      "dirname": "2026-02-02_KernelTuning",
+      "date": "2026-02-02",
+      "label": "KernelTuning",
+      "category": "Engineering",
+      "step_epi": 1682.375,
+      "time_epi": 71.77099320125812,
+      "n_val_points": 8,
+      "max_step": 1555
+    },
+    {
+      "dirname": "2026-02-03_VeTuned",
+      "date": "2026-02-03",
+      "label": "VeTuned",
+      "category": "Engineering",
+      "step_epi": 1677.8000000000004,
+      "time_epi": 71.39502818118986,
+      "n_val_points": 8,
+      "max_step": 1547
+    },
+    {
+      "dirname": "2026-02-06_SparseBigramGradient",
+      "date": "2026-02-06",
+      "label": "SparseBigramGradient",
+      "category": "Engineering",
+      "step_epi": 1681.1,
+      "time_epi": 70.78494740541095,
+      "n_val_points": 8,
+      "max_step": 1555
+    },
+    {
+      "dirname": "2026-02-10_ShortWindow",
+      "date": "2026-02-10",
+      "label": "ShortWindow",
+      "category": "Engineering",
+      "step_epi": 1679.8625000000002,
+      "time_epi": 73.06899217300129,
+      "n_val_points": 8,
+      "max_step": 1555
+    },
+    {
+      "dirname": "2026-02-12_ParallelResiduals",
+      "date": "2026-02-12",
+      "label": "ParallelResiduals",
+      "category": "Architecture",
+      "step_epi": 1681.1749999999997,
+      "time_epi": 69.56324385546178,
+      "n_val_points": 8,
+      "max_step": 1510
+    },
+    {
+      "dirname": "2026-02-16_FlattenForward",
+      "date": "2026-02-16",
+      "label": "FlattenForward",
+      "category": "Engineering",
+      "step_epi": 1649.6625000000004,
+      "time_epi": 67.29851785000002,
+      "n_val_points": 7,
+      "max_step": 1490
+    },
+    {
+      "dirname": "2026-02-23_CrossEntropyKernel",
+      "date": "2026-02-23",
+      "label": "CrossEntropyKernel",
+      "category": "Engineering",
+      "step_epi": 1646.1125000000002,
+      "time_epi": 66.34675415000001,
+      "n_val_points": 7,
+      "max_step": 1490
+    },
+    {
+      "dirname": "2026-02-28_TransposeCopyBackward",
+      "date": "2026-02-28",
+      "label": "TransposeCopyBackward",
+      "category": "Engineering",
+      "step_epi": 1650.3375000000005,
+      "time_epi": 66.40447180000002,
+      "n_val_points": 7,
+      "max_step": 1490
+    },
+    {
+      "dirname": "2026-03-06_SimplifyHC",
+      "date": "2026-03-06",
+      "label": "SimplifyHC",
+      "category": "Engineering",
+      "step_epi": 1652.9125000000001,
+      "time_epi": 65.17311335000002,
+      "n_val_points": 7,
+      "max_step": 1490
+    },
+    {
+      "dirname": "2026-03-22_VarlenMaxDocs",
+      "date": "2026-03-22",
+      "label": "VarlenMaxDocs",
+      "category": "Engineering",
+      "step_epi": 1647.2,
+      "time_epi": 64.45389105000002,
+      "n_val_points": 7,
+      "max_step": 1490
+    },
+    {
+      "dirname": "2026-04-04_FuseCEFwdAndBwd",
+      "date": "2026-04-04",
+      "label": "FuseCEFwdAndBwd",
+      "category": "Engineering",
+      "step_epi": 1646.4625000000003,
+      "time_epi": 63.998058300000025,
+      "n_val_points": 7,
+      "max_step": 1490
+    },
+    {
+      "dirname": "2026-04-08_PairedHeadMuon",
+      "date": "2026-04-08",
+      "label": "PairedHeadMuon",
+      "category": "Engineering",
+      "step_epi": 1641.675,
+      "time_epi": 67.64752096607188,
+      "n_val_points": 7,
+      "max_step": 1480
+    }
+  ]
+}
