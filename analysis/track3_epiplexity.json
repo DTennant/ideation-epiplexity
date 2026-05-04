@@ -1,0 +1,1238 @@
+{
+  "runs": [
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1452.0335000000002,
+      "final_loss": 3.27874,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1459.9864999999995,
+      "final_loss": 3.2764,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1456.5855000000006,
+      "final_loss": 3.27764,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1453.3446249999993,
+      "final_loss": 3.27999,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1453.689625,
+      "final_loss": 3.27765,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1452.4708750000002,
+      "final_loss": 3.27879,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1457.9353749999996,
+      "final_loss": 3.27861,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1454.1103749999995,
+      "final_loss": 3.27889,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1453.1967499999996,
+      "final_loss": 3.27842,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1460.8779999999997,
+      "final_loss": 3.27874,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1453.3406249999996,
+      "final_loss": 3.27863,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1452.9488749999996,
+      "final_loss": 3.27847,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1453.5666250000002,
+      "final_loss": 3.27887,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1453.0437500000003,
+      "final_loss": 3.27786,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1455.6145000000001,
+      "final_loss": 3.27784,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1452.3077499999993,
+      "final_loss": 3.27864,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1452.515375,
+      "final_loss": 3.27695,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1455.2860000000005,
+      "final_loss": 3.2788,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1452.9166249999998,
+      "final_loss": 3.28099,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "file": "1bd8db7a-f3a3-4195-856d-cab7e0816443.txt",
+      "epiplexity": 1454.582375,
+      "final_loss": 3.27839,
+      "n_val_points": 39,
+      "total_steps": 3350
+    },
+    {
+      "optimizer": "AdamH",
+      "entry": 4,
+      "file": "20260430_adamh/6b19a86b-ddfe-476c-9983-2a967bd99ca9.txt",
+      "epiplexity": 2273.724375,
+      "final_loss": 3.27637,
+      "n_val_points": 40,
+      "total_steps": 4875
+    },
+    {
+      "optimizer": "AdamH",
+      "entry": 4,
+      "file": "20260430_adamh/6e12f28e-152b-4c4c-8cd4-adf8c304ecd0.txt",
+      "epiplexity": 2283.62125,
+      "final_loss": 3.27482,
+      "n_val_points": 40,
+      "total_steps": 4875
+    },
+    {
+      "optimizer": "AdamH",
+      "entry": 4,
+      "file": "20260430_adamh/7533dd87-107f-4a4f-8229-acbec0fb00ac.txt",
+      "epiplexity": 2282.0212499999993,
+      "final_loss": 3.27246,
+      "n_val_points": 40,
+      "total_steps": 4875
+    },
+    {
+      "optimizer": "AdamH",
+      "entry": 4,
+      "file": "20260430_adamh/971cd76f-30f1-466a-acd8-8520b05605fc.txt",
+      "epiplexity": 2285.8656249999995,
+      "final_loss": 3.27279,
+      "n_val_points": 40,
+      "total_steps": 4875
+    },
+    {
+      "optimizer": "AdamH",
+      "entry": 4,
+      "file": "20260430_adamh/ab379ce5-8e3f-4190-95c3-278728360085.txt",
+      "epiplexity": 2279.640625,
+      "final_loss": 3.27425,
+      "n_val_points": 40,
+      "total_steps": 4875
+    },
+    {
+      "optimizer": "MuonH",
+      "entry": 5,
+      "file": "20260430_muonh/28df77c8-d9e8-4759-9136-4cd1fcebc672.txt",
+      "epiplexity": 1592.4415000000004,
+      "final_loss": 3.27906,
+      "n_val_points": 28,
+      "total_steps": 3325
+    },
+    {
+      "optimizer": "MuonH",
+      "entry": 5,
+      "file": "20260430_muonh/4730828a-3517-4c47-a174-2be355c4f0de.txt",
+      "epiplexity": 1592.5994999999991,
+      "final_loss": 3.27796,
+      "n_val_points": 28,
+      "total_steps": 3325
+    },
+    {
+      "optimizer": "MuonH",
+      "entry": 5,
+      "file": "20260430_muonh/4e11deec-9699-4a43-8f3f-87ddf060100c.txt",
+      "epiplexity": 1596.13125,
+      "final_loss": 3.27882,
+      "n_val_points": 28,
+      "total_steps": 3325
+    },
+    {
+      "optimizer": "MuonH",
+      "entry": 5,
+      "file": "20260430_muonh/62e82126-de0e-45d1-bc70-d59aa31a4fb1.txt",
+      "epiplexity": 1589.8752499999998,
+      "final_loss": 3.27836,
+      "n_val_points": 28,
+      "total_steps": 3325
+    },
+    {
+      "optimizer": "MuonH",
+      "entry": 5,
+      "file": "20260430_muonh/9319c798-6643-464a-b407-b05468e468f5.txt",
+      "epiplexity": 1597.0775,
+      "final_loss": 3.27528,
+      "n_val_points": 28,
+      "total_steps": 3325
+    },
+    {
+      "optimizer": "MuonH",
+      "entry": 5,
+      "file": "20260430_muonh/9cff801b-4ff7-4104-b01c-29b2202f2003.txt",
+      "epiplexity": 1592.1628750000007,
+      "final_loss": 3.27959,
+      "n_val_points": 28,
+      "total_steps": 3325
+    },
+    {
+      "optimizer": "MuonH",
+      "entry": 5,
+      "file": "20260430_muonh/be7cc5ed-fb14-4be6-9806-829ec7549eb8.txt",
+      "epiplexity": 1594.4272500000004,
+      "final_loss": 3.27724,
+      "n_val_points": 28,
+      "total_steps": 3325
+    },
+    {
+      "optimizer": "MuonH",
+      "entry": 5,
+      "file": "20260430_muonh/e69fd378-bccd-4106-9a34-4f7a48883609.txt",
+      "epiplexity": 1592.631874999999,
+      "final_loss": 3.27735,
+      "n_val_points": 28,
+      "total_steps": 3325
+    },
+    {
+      "optimizer": "MuonH",
+      "entry": 5,
+      "file": "20260430_muonh/ee63188e-b338-4bf2-845d-1ecc3ccaeafb.txt",
+      "epiplexity": 1591.9022499999996,
+      "final_loss": 3.27938,
+      "n_val_points": 28,
+      "total_steps": 3325
+    },
+    {
+      "optimizer": "MuonH",
+      "entry": 5,
+      "file": "20260430_muonh/efcac613-8a5d-48a6-84fa-72575f8938d9.txt",
+      "epiplexity": 1591.9800000000005,
+      "final_loss": 3.27906,
+      "n_val_points": 28,
+      "total_steps": 3325
+    },
+    {
+      "optimizer": "NorMuonH",
+      "entry": 8,
+      "file": "20260430_normuonh/15b3e591-24fc-40dd-8547-8f201896d260.txt",
+      "epiplexity": 1564.1873750000002,
+      "final_loss": 3.27771,
+      "n_val_points": 28,
+      "total_steps": 3275
+    },
+    {
+      "optimizer": "NorMuonH",
+      "entry": 8,
+      "file": "20260430_normuonh/38e6cabf-f71e-4adb-b620-477c2bd70a81.txt",
+      "epiplexity": 1565.5062500000001,
+      "final_loss": 3.27644,
+      "n_val_points": 28,
+      "total_steps": 3275
+    },
+    {
+      "optimizer": "NorMuonH",
+      "entry": 8,
+      "file": "20260430_normuonh/530f62e2-582a-4de0-aa9d-0a2ee62206eb.txt",
+      "epiplexity": 1563.3741249999996,
+      "final_loss": 3.27787,
+      "n_val_points": 28,
+      "total_steps": 3275
+    },
+    {
+      "optimizer": "NorMuonH",
+      "entry": 8,
+      "file": "20260430_normuonh/54f064dc-17d6-4fd4-8b07-281bdbcb9c7d.txt",
+      "epiplexity": 1561.0094999999994,
+      "final_loss": 3.2787,
+      "n_val_points": 28,
+      "total_steps": 3275
+    },
+    {
+      "optimizer": "NorMuonH",
+      "entry": 8,
+      "file": "20260430_normuonh/8b244aea-b985-4669-b9d9-9bafb607132b.txt",
+      "epiplexity": 1564.667375,
+      "final_loss": 3.27711,
+      "n_val_points": 28,
+      "total_steps": 3275
+    },
+    {
+      "optimizer": "NorMuonH",
+      "entry": 8,
+      "file": "20260430_normuonh/a6251aec-847d-480b-afee-78e6b8251a0d.txt",
+      "epiplexity": 1565.8549999999993,
+      "final_loss": 3.27708,
+      "n_val_points": 28,
+      "total_steps": 3275
+    },
+    {
+      "optimizer": "NorMuonH",
+      "entry": 8,
+      "file": "20260430_normuonh/b27e41ac-f5df-4359-8c8d-5e40a07b0bb3.txt",
+      "epiplexity": 1566.5846249999997,
+      "final_loss": 3.27767,
+      "n_val_points": 28,
+      "total_steps": 3275
+    },
+    {
+      "optimizer": "NorMuonH",
+      "entry": 8,
+      "file": "20260430_normuonh/f166e3d2-afce-4145-bd38-137f171c21ac.txt",
+      "epiplexity": 1568.2250000000004,
+      "final_loss": 3.27662,
+      "n_val_points": 28,
+      "total_steps": 3275
+    },
+    {
+      "optimizer": "NorMuonH",
+      "entry": 8,
+      "file": "20260430_normuonh/f316e57a-213c-4f73-b5a9-a10ea1692e4f.txt",
+      "epiplexity": 1564.9823749999996,
+      "final_loss": 3.27761,
+      "n_val_points": 28,
+      "total_steps": 3275
+    },
+    {
+      "optimizer": "NorMuonH",
+      "entry": 8,
+      "file": "20260430_normuonh/f45b5dcf-16bb-4e83-b5c7-4ef4981f0e9f.txt",
+      "epiplexity": 1568.3112499999993,
+      "final_loss": 3.27598,
+      "n_val_points": 28,
+      "total_steps": 3275
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/08cd60f9-99e2-4e28-b1ac-19136dd42a05.txt",
+      "epiplexity": 956.1375,
+      "final_loss": 3.27807,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/1ba806aa-ef41-4517-abbf-38330984ac3f.txt",
+      "epiplexity": 956.9337500000007,
+      "final_loss": 3.28,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/4385349b-7c23-4b4b-b79a-95d579b1b70b.txt",
+      "epiplexity": 958.4562500000004,
+      "final_loss": 3.27906,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/49892438-517a-444f-9ab9-0f4f1b8d5cae.txt",
+      "epiplexity": 985.1576250000004,
+      "final_loss": 3.27791,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/5672c759-be9f-45dc-9e04-699c56bbf413.txt",
+      "epiplexity": 960.2937499999994,
+      "final_loss": 3.27626,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/8748e9a7-bc4f-4c90-bc86-166dae734ba0.txt",
+      "epiplexity": 955.0250000000002,
+      "final_loss": 3.27906,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/91f32438-ecde-4f67-b90e-49552e956dcf.txt",
+      "epiplexity": 957.060125,
+      "final_loss": 3.27989,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/9ae8a47a-a4a4-4ba2-b384-1b4360e6ee51.txt",
+      "epiplexity": 983.4572500000004,
+      "final_loss": 3.27967,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/9b2cc0ea-a2de-480e-8813-e4706bad022e.txt",
+      "epiplexity": 982.7423750000006,
+      "final_loss": 3.27912,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/b94ed9ac-bd9d-4541-826e-8be30b25d6e3.txt",
+      "epiplexity": 957.5767500000003,
+      "final_loss": 3.27832,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/c0752fb3-86a1-4437-95ce-01fe95da7a79.txt",
+      "epiplexity": 957.6723750000003,
+      "final_loss": 3.27851,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/d377df35-55a1-4de6-809f-8b41959f6588.txt",
+      "epiplexity": 958.4558749999999,
+      "final_loss": 3.27733,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/dc31a642-a8f9-4336-a08a-dda2c4c4b8c8.txt",
+      "epiplexity": 984.525125,
+      "final_loss": 3.27867,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/df31ca97-bd27-4b59-b13e-24d1a331ce34.txt",
+      "epiplexity": 955.7120000000003,
+      "final_loss": 3.27846,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/e0b334f8-bb17-4527-98cf-f2ea7b4d3c22.txt",
+      "epiplexity": 960.3243750000001,
+      "final_loss": 3.27752,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "file": "20260501_contra_muon/f4ce8dd4-b914-463b-96e0-7b315653f422.txt",
+      "epiplexity": 958.9741250000002,
+      "final_loss": 3.2788,
+      "n_val_points": 29,
+      "total_steps": 3225
+    },
+    {
+      "optimizer": "Muon\u00b2",
+      "entry": 7,
+      "file": "20260501_muonsq/bb903816-ea27-4f5f-8028-c963d38c6a7f.txt",
+      "epiplexity": 1530.7471249999994,
+      "final_loss": 3.27523,
+      "n_val_points": 28,
+      "total_steps": 3325
+    },
+    {
+      "optimizer": "NorMuon + u/w-floor",
+      "entry": 9,
+      "file": "20260501_skylight001/1cd721e0-add6-4613-a57e-5e32723efb07.txt",
+      "epiplexity": 1524.7318749999997,
+      "final_loss": 3.27543,
+      "n_val_points": 27,
+      "total_steps": 3250
+    },
+    {
+      "optimizer": "NorMuon + u/w-floor",
+      "entry": 9,
+      "file": "20260501_skylight001/2d373439-2c86-45a4-b3fb-5c7f8b02b4a9.txt",
+      "epiplexity": 1520.1524999999997,
+      "final_loss": 3.27794,
+      "n_val_points": 27,
+      "total_steps": 3250
+    },
+    {
+      "optimizer": "NorMuon + u/w-floor",
+      "entry": 9,
+      "file": "20260501_skylight001/3689e888-5b87-496a-989d-923a3006817e.txt",
+      "epiplexity": 1523.0262500000003,
+      "final_loss": 3.2777,
+      "n_val_points": 27,
+      "total_steps": 3250
+    },
+    {
+      "optimizer": "NorMuon + u/w-floor",
+      "entry": 9,
+      "file": "20260501_skylight001/469d11a4-36dd-4b28-835b-8b741d55d6a3.txt",
+      "epiplexity": 1523.200625,
+      "final_loss": 3.27651,
+      "n_val_points": 27,
+      "total_steps": 3250
+    },
+    {
+      "optimizer": "NorMuon + u/w-floor",
+      "entry": 9,
+      "file": "20260501_skylight001/6cb89ee1-67f7-4199-851c-8a9e3760e3b5.txt",
+      "epiplexity": 1521.005625,
+      "final_loss": 3.27615,
+      "n_val_points": 27,
+      "total_steps": 3250
+    },
+    {
+      "optimizer": "NorMuon + u/w-floor",
+      "entry": 9,
+      "file": "20260501_skylight001/e9e6f7ec-2ea3-4771-a112-5210cdd8df8f.txt",
+      "epiplexity": 1518.2856249999995,
+      "final_loss": 3.27787,
+      "n_val_points": 27,
+      "total_steps": 3250
+    },
+    {
+      "optimizer": "NorMuon + u/w-floor",
+      "entry": 9,
+      "file": "20260501_skylight001/f199a697-5414-4067-a566-3219d2fd5748.txt",
+      "epiplexity": 1521.7143749999998,
+      "final_loss": 3.27775,
+      "n_val_points": 27,
+      "total_steps": 3250
+    },
+    {
+      "optimizer": "NorMuon + u/w-floor",
+      "entry": 9,
+      "file": "20260501_skylight001/f78af80a-2ba3-4cf7-b9f7-e6e56ff2c54d.txt",
+      "epiplexity": 1523.7187499999998,
+      "final_loss": 3.27726,
+      "n_val_points": 27,
+      "total_steps": 3250
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/08ffadff-3576-496b-9795-2dc5cf8f4f46.txt",
+      "epiplexity": 1416.5934999999993,
+      "final_loss": 3.2768,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/08ffadff-3576-496b-9795-2dc5cf8f4f46.txt",
+      "epiplexity": 1424.9024999999997,
+      "final_loss": 3.27767,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/08ffadff-3576-496b-9795-2dc5cf8f4f46.txt",
+      "epiplexity": 1417.0700000000002,
+      "final_loss": 3.27894,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/08ffadff-3576-496b-9795-2dc5cf8f4f46.txt",
+      "epiplexity": 1416.5750000000003,
+      "final_loss": 3.27886,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/08ffadff-3576-496b-9795-2dc5cf8f4f46.txt",
+      "epiplexity": 1420.3502499999995,
+      "final_loss": 3.27687,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/08ffadff-3576-496b-9795-2dc5cf8f4f46.txt",
+      "epiplexity": 1417.1119999999992,
+      "final_loss": 3.27803,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/08ffadff-3576-496b-9795-2dc5cf8f4f46.txt",
+      "epiplexity": 1417.0606249999998,
+      "final_loss": 3.27657,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/08ffadff-3576-496b-9795-2dc5cf8f4f46.txt",
+      "epiplexity": 1423.93175,
+      "final_loss": 3.27582,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/08ffadff-3576-496b-9795-2dc5cf8f4f46.txt",
+      "epiplexity": 1419.9411249999996,
+      "final_loss": 3.27653,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/08ffadff-3576-496b-9795-2dc5cf8f4f46.txt",
+      "epiplexity": 1423.18,
+      "final_loss": 3.2763,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/e0d0185f-ccb8-426d-8265-a4e762ec69f6.txt",
+      "epiplexity": 1420.9393750000002,
+      "final_loss": 3.27744,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/e0d0185f-ccb8-426d-8265-a4e762ec69f6.txt",
+      "epiplexity": 1418.848375,
+      "final_loss": 3.27717,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/e0d0185f-ccb8-426d-8265-a4e762ec69f6.txt",
+      "epiplexity": 1419.4409999999993,
+      "final_loss": 3.27755,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/e0d0185f-ccb8-426d-8265-a4e762ec69f6.txt",
+      "epiplexity": 1418.726125,
+      "final_loss": 3.27663,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/e0d0185f-ccb8-426d-8265-a4e762ec69f6.txt",
+      "epiplexity": 1421.0420000000006,
+      "final_loss": 3.27709,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/e0d0185f-ccb8-426d-8265-a4e762ec69f6.txt",
+      "epiplexity": 1418.0377500000006,
+      "final_loss": 3.27587,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/e0d0185f-ccb8-426d-8265-a4e762ec69f6.txt",
+      "epiplexity": 1422.3049999999998,
+      "final_loss": 3.27691,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/e0d0185f-ccb8-426d-8265-a4e762ec69f6.txt",
+      "epiplexity": 1418.8022499999997,
+      "final_loss": 3.27863,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/e0d0185f-ccb8-426d-8265-a4e762ec69f6.txt",
+      "epiplexity": 1419.4840000000006,
+      "final_loss": 3.27669,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "file": "20260503_normuon/e0d0185f-ccb8-426d-8265-a4e762ec69f6.txt",
+      "epiplexity": 1423.354875,
+      "final_loss": 3.27678,
+      "n_val_points": 28,
+      "total_steps": 3300
+    },
+    {
+      "optimizer": "Muon + aux Adam (tuned)",
+      "entry": 3,
+      "file": "311d7833-8dfc-43ea-a55c-fd313a11c4a8.txt",
+      "epiplexity": 1402.9218749999995,
+      "final_loss": 3.27673,
+      "n_val_points": 29,
+      "total_steps": 3500
+    },
+    {
+      "optimizer": "Unknown (478c0427)",
+      "entry": -1,
+      "file": "478c0427-06ce-4952-bc0a-7e2dfaea29b6.txt",
+      "epiplexity": 1399.7067499999998,
+      "final_loss": 3.2885,
+      "n_val_points": 36,
+      "total_steps": 3150
+    },
+    {
+      "optimizer": "Unknown (478c0427)",
+      "entry": -1,
+      "file": "478c0427-06ce-4952-bc0a-7e2dfaea29b6.txt",
+      "epiplexity": 1397.63025,
+      "final_loss": 3.28879,
+      "n_val_points": 36,
+      "total_steps": 3150
+    },
+    {
+      "optimizer": "Unknown (478c0427)",
+      "entry": -1,
+      "file": "478c0427-06ce-4952-bc0a-7e2dfaea29b6.txt",
+      "epiplexity": 1403.567999999999,
+      "final_loss": 3.28717,
+      "n_val_points": 36,
+      "total_steps": 3150
+    },
+    {
+      "optimizer": "Unknown (478c0427)",
+      "entry": -1,
+      "file": "478c0427-06ce-4952-bc0a-7e2dfaea29b6.txt",
+      "epiplexity": 1398.5248749999998,
+      "final_loss": 3.28815,
+      "n_val_points": 36,
+      "total_steps": 3150
+    },
+    {
+      "optimizer": "Unknown (478c0427)",
+      "entry": -1,
+      "file": "478c0427-06ce-4952-bc0a-7e2dfaea29b6.txt",
+      "epiplexity": 1403.4827499999994,
+      "final_loss": 3.28765,
+      "n_val_points": 36,
+      "total_steps": 3150
+    },
+    {
+      "optimizer": "Unknown (478c0427)",
+      "entry": -1,
+      "file": "478c0427-06ce-4952-bc0a-7e2dfaea29b6.txt",
+      "epiplexity": 1405.1251250000005,
+      "final_loss": 3.28658,
+      "n_val_points": 36,
+      "total_steps": 3150
+    },
+    {
+      "optimizer": "Unknown (478c0427)",
+      "entry": -1,
+      "file": "478c0427-06ce-4952-bc0a-7e2dfaea29b6.txt",
+      "epiplexity": 1399.7205000000004,
+      "final_loss": 3.28992,
+      "n_val_points": 36,
+      "total_steps": 3150
+    },
+    {
+      "optimizer": "Unknown (478c0427)",
+      "entry": -1,
+      "file": "478c0427-06ce-4952-bc0a-7e2dfaea29b6.txt",
+      "epiplexity": 1401.9728750000004,
+      "final_loss": 3.28807,
+      "n_val_points": 36,
+      "total_steps": 3150
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1415.3812499999997,
+      "final_loss": 3.27924,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1415.4231249999998,
+      "final_loss": 3.27941,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1418.5862499999996,
+      "final_loss": 3.27694,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1414.5762499999996,
+      "final_loss": 3.28106,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1415.7443749999993,
+      "final_loss": 3.27843,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1421.4431250000002,
+      "final_loss": 3.27995,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1417.6875,
+      "final_loss": 3.27806,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1417.3356249999995,
+      "final_loss": 3.28161,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1416.971875,
+      "final_loss": 3.27765,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1410.3806249999993,
+      "final_loss": 3.27945,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1415.7887499999995,
+      "final_loss": 3.27936,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1418.535,
+      "final_loss": 3.28124,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1416.3425000000004,
+      "final_loss": 3.27804,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1415.1368750000004,
+      "final_loss": 3.27859,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1417.4712499999996,
+      "final_loss": 3.27754,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1414.8937499999995,
+      "final_loss": 3.27728,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1415.5624999999998,
+      "final_loss": 3.27802,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1412.6506249999993,
+      "final_loss": 3.27877,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1418.0449999999998,
+      "final_loss": 3.2801,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "file": "51ece938-03c5-4343-8dcc-3f3336b07008.txt",
+      "epiplexity": 1414.8325000000002,
+      "final_loss": 3.27784,
+      "n_val_points": 28,
+      "total_steps": 3375
+    },
+    {
+      "optimizer": "Muon + aux Adam",
+      "entry": 1,
+      "file": "7b8270c5-a9cd-4a73-b7d8-5d86a2d1e428.txt",
+      "epiplexity": 1394.341125,
+      "final_loss": 3.27765,
+      "n_val_points": 30,
+      "total_steps": 3600
+    },
+    {
+      "optimizer": "AdamW",
+      "entry": 2,
+      "file": "a63a68d1-24aa-4a22-af9a-224e43209ea4.txt",
+      "epiplexity": 2339.5181249999996,
+      "final_loss": 3.27903,
+      "n_val_points": 46,
+      "total_steps": 5625
+    }
+  ],
+  "aggregated": [
+    {
+      "optimizer": "Unknown (478c0427)",
+      "entry": -1,
+      "n_runs": 8,
+      "epiplexity_mean": 1401.2163906249998,
+      "epiplexity_std": 2.528297080390033,
+      "final_loss_mean": 3.28810375,
+      "final_loss_std": 0.0009571825518154848,
+      "total_steps": 3150,
+      "epiplexity_per_step": 0.44483060019841264
+    },
+    {
+      "optimizer": "Muon + aux Adam",
+      "entry": 1,
+      "n_runs": 1,
+      "epiplexity_mean": 1394.341125,
+      "epiplexity_std": 0,
+      "final_loss_mean": 3.27765,
+      "final_loss_std": 0,
+      "total_steps": 3600,
+      "epiplexity_per_step": 0.38731697916666663
+    },
+    {
+      "optimizer": "AdamW",
+      "entry": 2,
+      "n_runs": 1,
+      "epiplexity_mean": 2339.5181249999996,
+      "epiplexity_std": 0,
+      "final_loss_mean": 3.27903,
+      "final_loss_std": 0,
+      "total_steps": 5625,
+      "epiplexity_per_step": 0.4159143333333333
+    },
+    {
+      "optimizer": "Muon + aux Adam (tuned)",
+      "entry": 3,
+      "n_runs": 1,
+      "epiplexity_mean": 1402.9218749999995,
+      "epiplexity_std": 0,
+      "final_loss_mean": 3.27673,
+      "final_loss_std": 0,
+      "total_steps": 3500,
+      "epiplexity_per_step": 0.4008348214285713
+    },
+    {
+      "optimizer": "AdamH",
+      "entry": 4,
+      "n_runs": 5,
+      "epiplexity_mean": 2280.974625,
+      "epiplexity_std": 4.1561426790654625,
+      "final_loss_mean": 3.2741379999999998,
+      "final_loss_std": 0.0014207237592156578,
+      "total_steps": 4875,
+      "epiplexity_per_step": 0.46789223076923075
+    },
+    {
+      "optimizer": "MuonH",
+      "entry": 5,
+      "n_runs": 10,
+      "epiplexity_mean": 1593.1229249999997,
+      "epiplexity_std": 2.040460835816323,
+      "final_loss_mean": 3.27821,
+      "final_loss_std": 0.0012426101560827254,
+      "total_steps": 3325,
+      "epiplexity_per_step": 0.4791347142857142
+    },
+    {
+      "optimizer": "Muon + aux Adam (v3)",
+      "entry": 6,
+      "n_runs": 20,
+      "epiplexity_mean": 1416.1394374999998,
+      "epiplexity_std": 2.27557973296794,
+      "final_loss_mean": 3.278929,
+      "final_loss_std": 0.0013125543798258334,
+      "total_steps": 3375,
+      "epiplexity_per_step": 0.4195968703703703
+    },
+    {
+      "optimizer": "Muon\u00b2",
+      "entry": 7,
+      "n_runs": 1,
+      "epiplexity_mean": 1530.7471249999994,
+      "epiplexity_std": 0,
+      "final_loss_mean": 3.27523,
+      "final_loss_std": 0,
+      "total_steps": 3325,
+      "epiplexity_per_step": 0.4603750751879698
+    },
+    {
+      "optimizer": "NorMuonH",
+      "entry": 8,
+      "n_runs": 10,
+      "epiplexity_mean": 1565.2702874999998,
+      "epiplexity_std": 2.0849860401586646,
+      "final_loss_mean": 3.277279,
+      "final_loss_std": 0.0007556778414112987,
+      "total_steps": 3275,
+      "epiplexity_per_step": 0.4779451259541984
+    },
+    {
+      "optimizer": "NorMuon + u/w-floor",
+      "entry": 9,
+      "n_runs": 8,
+      "epiplexity_mean": 1521.979453125,
+      "epiplexity_std": 1.9744858764546103,
+      "final_loss_mean": 3.27707625,
+      "final_loss_std": 0.0008761840203404913,
+      "total_steps": 3250,
+      "epiplexity_per_step": 0.46830137019230766
+    },
+    {
+      "optimizer": "NorMuon",
+      "entry": 10,
+      "n_runs": 20,
+      "epiplexity_mean": 1419.8848750000002,
+      "epiplexity_std": 2.5071500992785953,
+      "final_loss_mean": 3.2771575,
+      "final_loss_std": 0.0008757389736674069,
+      "total_steps": 3300,
+      "epiplexity_per_step": 0.430268143939394
+    },
+    {
+      "optimizer": "Contra-Muon",
+      "entry": 11,
+      "n_runs": 16,
+      "epiplexity_mean": 964.2815156250002,
+      "epiplexity_std": 11.461747944749792,
+      "final_loss_mean": 3.2785406249999998,
+      "final_loss_std": 0.0009542370561736002,
+      "total_steps": 3225,
+      "epiplexity_per_step": 0.29900202034883727
+    },
+    {
+      "optimizer": "Muon + aux Adam (v4)",
+      "entry": 12,
+      "n_runs": 20,
+      "epiplexity_mean": 1454.51768125,
+      "epiplexity_std": 2.457933277698376,
+      "final_loss_mean": 3.2784655000000003,
+      "final_loss_std": 0.000952955796456508,
+      "total_steps": 3350,
+      "epiplexity_per_step": 0.43418438246268654
+    }
+  ]
+}
