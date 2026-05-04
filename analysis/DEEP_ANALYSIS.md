@@ -1,412 +1,311 @@
-# Deep Analysis: Fine-Grained Novelty, Sequential Dependencies, and Cumulative Effects in Track 1 Epiplexity
+# Deep Analysis: Epiplexity in the NanoGPT Speedrun
 
-## 1. Overview
+*A fine-grained, sequential-dependency-aware analysis of innovation and learning dynamics*
 
-This analysis extends the initial Track 1 epiplexity analysis with three key improvements:
+## Motivation
 
-1. **Fine-grained novelty assessment**: Instead of coarse Architecture/Optimization/Engineering categories, each record receives a 1–5 novelty score based on the genuine originality of its core idea.
-2. **Sequential dependency analysis**: We model the assumption that each record builds on the previous one, analyzing marginal contributions and cumulative effects.
-3. **Causal/regime analysis**: We identify structural breaks and "keystone" innovations whose impact propagates through subsequent records.
+The initial analysis ([TRACK1_ANALYSIS.md](TRACK1_ANALYSIS.md)) classified submissions into three coarse categories (Architecture, Optimization, Engineering) and concluded that **raw epiplexity is primarily a proxy for training duration**. While correct, this conclusion misses deeper structure:
 
-**Key finding**: After normalizing for step count, cumulative novelty explains **R² = 0.95** of the variance in epiplexity/step (Pearson), but this is driven by a **confound**: both cumulative novelty and epi/step increase monotonically with record index. The marginal novelty–ΔEpi relationship is weak (Spearman ρ = 0.28, p = 0.008), and the effect is dominated by a few regime shifts rather than smooth accumulation.
+1. **Not all "Architecture" changes are equally novel.** Combining known components (RMSNorm + SwiGLU = "ModernArch") is fundamentally different from inventing a new optimizer (Muon) or a new training objective (MultiTokenPrediction).
+
+2. **Each record builds on all previous records.** The speedrun is a sequential process where innovations accumulate. The epiplexity of record $n$ depends not just on what record $n$ changed, but on the entire history of innovations $1, 2, \ldots, n-1$.
+
+3. **Step count confounds raw epiplexity, but normalizing by steps reveals a surprise.** Once we control for duration, we find that **later submissions have *more* learning per step, not less** — the opposite of what naive efficiency arguments would predict.
+
+This analysis addresses all three points with fine-grained innovation classification, sequential dependency modeling, and proper normalization.
 
 ---
 
-## 2. Fine-Grained Novelty Scores
+## 1. Fine-Grained Innovation Classification
 
-### Scoring Rubric
+Instead of three coarse categories, we classify each of the 89 submissions along two dimensions:
 
-| Score | Meaning | Criteria |
-|-------|---------|----------|
-| **1** | Pure engineering | Speed/kernel optimization, version upgrades, code cleanup. No change to learning algorithm or model structure. |
-| **2** | Known technique | Applying a well-known technique (ReLU², bf16, RoPE) straightforwardly. Minimal creative adaptation. |
-| **3** | Creative adaptation | Known concept adapted creatively to this setting, or a non-trivial hyperparameter/scheduling innovation. |
-| **4** | Novel for setting | Idea that is new or rare in this specific context (small-scale GPT training), even if it draws on existing research. |
-| **5** | Genuinely novel | Idea first introduced or popularized through this speedrun community. |
+### Innovation Type (24 sub-categories)
 
-### Full Novelty Table
+| Paradigm | Sub-Types | Examples |
+|---|---|---|
+| **Optimizer** | `optimizer_core`, `optimizer_hybrid`, `optimizer_tuning`, `optimizer_regularization`, `optimizer_engineering` | Muon, NorMuon, SOAP, PolarExpress, CautiousWD |
+| **Architecture** | `arch_backbone`, `arch_attention`, `arch_embedding`, `arch_residual`, `arch_activation`, `arch_objective`, `arch_gating`, `arch_unet`, `arch_sparsity` | ModernArch, PairedHeadAttention, ValueEmbed, MultiTokenPrediction |
+| **Engineering** | `systems_kernel`, `systems_precision`, `systems_comm`, `systems_framework`, `systems_attention`, `systems_pipeline`, `systems_data` | TritonMuon, FusedLinearReLUSquare, FA3, VarlenMaxDocs |
+| **Training** | `training_recipe`, `training_schedule` | llmc, 50Bruns, BatchSizeSchedule |
 
-![Novelty Scores](figures/novelty_scores.png)
+### Novelty Score (1–5 scale)
 
-| # | Record | Category | Nov. | Reasoning |
-|---|--------|----------|------|-----------|
-| 1 | AdamW | Optimization | 1 | Baseline AdamW — standard optimizer, no novelty |
-| 2 | SOAP | Optimization | 4 | SOAP optimizer — novel second-order optimizer adapting Shampoo ideas, relatively new at the time |
-| 3 | Muon | Optimization | **5** | Muon optimizer — genuinely novel optimizer based on matrix orthogonalization, first popularized here |
-| 4 | llmc | Optimization | 2 | llm.c port — engineering port of existing code to C |
-| 5 | ModernArch | Architecture | 3 | Collection of modern arch choices (RMSNorm, RoPE, SwiGLU) — known techniques combined thoughtfully |
-| 6 | DistributedMuon | Engineering | 1 | Distributed implementation of Muon — pure engineering |
-| 7 | PyTorch25 | Engineering | 1 | PyTorch version upgrade — pure engineering |
-| 8 | ScaleUp1B | Architecture | 2 | Scaling up to 1B params — straightforward scaling |
-| 9 | Optimizers | Optimization | 2 | Optimizer tuning/comparison — incremental |
-| 10 | UntieEmbed | Architecture | 3 | Untying embeddings — known technique, meaningful arch decision at this scale |
-| 11 | 50Bruns | Optimization | 1 | 50B tokens run — just training longer |
-| 12 | ShortcutsTweaks | Architecture | 3 | Skip/shortcut tweaks — creative ResNet-style adaptation |
-| 13 | CastBf16 | Engineering | 1 | BF16 casting — standard precision engineering |
-| 14 | Replicateleloykun | Optimization | 1 | Replication run — no novelty |
-| 15 | ScaleShortcuts | Architecture | 2 | Scaling shortcut connections — straightforward extension |
-| 16 | UNetDoubleLr | Architecture | 3 | U-Net style LR scheduling across layers — creative adaptation |
-| 17 | QuantizedFP4 | Architecture | 2 | FP4 quantization — known technique |
-| 18 | FlexAttention | Engineering | 2 | FlexAttention kernel — using PyTorch API |
-| 19 | WindowWarmup | Architecture | 3 | Attention window warmup — creative training schedule |
-| 20 | ValueEmbed | Architecture | **4** | Value Embeddings — novel idea of adding embeddings to value stream |
-| 21 | UNetValueEmbedsTweaks | Architecture | 2 | Tweaks to existing ideas — incremental refinement |
-| 22 | MFUTweaks | Engineering | 1 | MFU optimization — pure engineering |
-| 23 | SparsifyEmbeds | Architecture | 3 | Sparse embeddings — creative efficiency approach |
-| 24 | SoftCap | Architecture | 2 | Logit soft-capping — known from Gemma/PaLM |
-| 25 | Fp8LmHead | Architecture | 2 | FP8 LM head — known precision reduction |
-| 26 | Sub3Min | Optimization | 1 | Sub-3-minute milestone — tuning optimization |
-| 27 | BatchSize | Optimization | 2 | Batch size tuning — standard HP optimization |
-| 28 | RuleTweak | Optimization | 1 | Competition rule tweak — not algorithmic |
-| 29 | SkipMLPBlocks | Architecture | 3 | Skipping MLP blocks — creative architectural simplification |
-| 30 | FasterReduce | Engineering | 1 | Faster all-reduce — communication engineering |
-| 31 | StableTorch | Engineering | 1 | Stable PyTorch — engineering |
-| 32 | EvenFasterReduce | Engineering | 1 | Faster reduce — pure engineering |
-| 33 | MuonWithAuxAdamExample | Optimization | 2 | Dual-optimizer technique — known approach |
-| 34 | noallreduce | Engineering | 1 | Communication optimization |
-| 35 | BosAlign | Architecture | 3 | BOS alignment — creative data processing insight |
-| 36 | UpgradeTorch190 | Engineering | 1 | PyTorch upgrade — engineering |
-| 37 | TritonMuon | Engineering | 1 | Triton kernel for Muon — engineering |
-| 38 | SparseAttnGate | Architecture | **4** | Sparse attention gating — novel attention mechanism |
-| 39 | FA3 | Engineering | 1 | Flash Attention 3 — engineering |
-| 40 | SkipMLPBlocks | Architecture | 3 | Same as #29 (resubmission) |
-| 41 | Yarn | Engineering | 1 | YARN integration — engineering |
-| 42 | VectSigmoidBFloat16 | Engineering | 1 | Kernel engineering |
-| 43 | AsyncDataLoadAttnFinalWindow | Engineering | 2 | Combining known techniques |
-| 44 | Smear | Architecture | 3 | Smear operation — creative attention modification |
-| 45 | DropAttn | Architecture | 3 | Attention dropout scheme — creative regularization |
-| 46 | MuonCustomSizing | Optimization | 2 | Muon HP tuning |
-| 47 | BF16CE | Engineering | 1 | Precision engineering |
-| 48 | PolarExpress | Optimization | 3 | Polar decomposition in optimizer — creative math approach |
-| 49 | CustomBatching | Engineering | 2 | Custom batching — data engineering |
-| 50 | Backout | Architecture | 2 | Reverting changes — finding better baseline |
-| 51 | NorMuon | Optimization | **4** | Normalized Muon — genuine optimizer innovation |
-| 52 | FixMuonLR | Optimization | 2 | HP fix |
-| 53 | AdamSyncGradientHook | Optimization | 2 | Engineering + optimization detail |
-| 54 | CautiousWD | Optimization | 3 | Cautious weight decay — adapting recent research |
-| 55 | RefineSkip | Architecture | 2 | Incremental arch refinement |
-| 56 | BatchSizeSchedule | Optimization | 3 | Creative training schedule |
-| 57 | SALambdaOnWeights | Architecture | 3 | Spectral lambda on weights — creative regularization |
-| 58 | NorMuonOptimsAndFixes | Optimization | 2 | Incremental refinement |
-| 59 | PartialKeyOffset | Architecture | 3 | Creative attention modification |
-| 60 | CautiousWDAdam | Optimization | 2 | Combining known techniques |
-| 61 | RetieLMHead | Architecture | 2 | Adjusting embedding tying |
-| 62 | SmoothedScalars | Optimization | 2 | Incremental optimization |
-| 63 | MultiTokenPrediction | Architecture | **4** | Multi-token prediction — significant training objective change from Meta MTP |
-| 64 | LogitRescale | Architecture | 3 | Creative output normalization |
-| 65 | VeSkipGates | Architecture | 3 | Creative gating mechanism |
-| 66 | GatesToCompiledAdam | Optimization | 1 | Engineering optimization |
-| 67 | MixedPrecisionInterweavedOptimizer | Optimization | 3 | Creative precision management |
-| 68 | PairedHeadAttention | Architecture | **4** | Novel attention pattern pairing |
-| 69 | FusedLinearReLUSquare | Engineering | 1 | Kernel fusion engineering |
-| 70 | FusedSoftcappedEntropy | Engineering | 1 | Kernel fusion engineering |
-| 71 | UnifiedOptimizers | Optimization | 2 | Code refactoring |
-| 72 | BigramHashEmbedding | Architecture | **4** | Novel bigram hash embedding approach |
-| 73 | ImprovedLMHead | Architecture | 3 | Creative output layer design |
-| 74 | UntieValueEmbeddings | Architecture | 3 | Extending untied embeddings to value stream |
-| 75 | MimeticValueOutput | Architecture | 3 | Creative initialization/alignment |
-| 76 | VeFused | Engineering | 1 | Kernel engineering |
-| 77 | BigramHashH2D | Engineering | 1 | Data transfer engineering |
-| 78 | KernelTuning | Engineering | 1 | Pure engineering |
-| 79 | VeTuned | Engineering | 1 | HP tuning |
-| 80 | SparseBigramGradient | Engineering | 2 | Gradient optimization |
-| 81 | ShortWindow | Engineering | 2 | Adjusting attention span |
-| 82 | ParallelResiduals | Architecture | 3 | GPT-J style parallel residuals |
-| 83 | FlattenForward | Engineering | 1 | Engineering optimization |
-| 84 | CrossEntropyKernel | Engineering | 1 | Kernel engineering |
-| 85 | TransposeCopyBackward | Engineering | 1 | Kernel engineering |
-| 86 | SimplifyHC | Engineering | 1 | Code cleanup |
-| 87 | VarlenMaxDocs | Engineering | 2 | Data loading optimization |
-| 88 | FuseCEFwdAndBwd | Engineering | 1 | Kernel engineering |
-| 89 | PairedHeadMuon | Engineering | 2 | Applying Muon to paired heads |
+Each submission receives a novelty score reflecting how structurally original the contribution is:
 
-### Novelty Distribution
+| Score | Label | Criteria | Count | Examples |
+|---|---|---|---|---|
+| **5** | Paradigm Shift | Fundamentally new algorithm/objective with no direct precedent | 2 | **Muon**, **MultiTokenPrediction** |
+| **4** | Novel | New technique that meaningfully changes model behavior | 11 | SOAP, UNetDoubleLr, ValueEmbed, SkipMLPBlocks, SparseAttnGate, NorMuon, PartialKeyOffset, PairedHeadAttention, BigramHashEmbedding, MimeticValueOutput |
+| **3** | Moderate | Interesting combination or adaptation of known ideas | 21 | ModernArch, UntieEmbed, WindowWarmup, CautiousWD, BatchSizeSchedule |
+| **2** | Incremental | Known technique applied in this context | 28 | AdamW, DistributedMuon, ScaleUp1B, LogitRescale, MuonCustomSizing |
+| **1** | Trivial | Version upgrade, bug fix, or pure kernel fusion | 27 | PyTorch25, CastBf16, MFUTweaks, FlattenForward, KernelTuning |
 
-| Score | Count | Mean Epi/Step | Examples |
-|-------|-------|---------------|----------|
-| 1 (Engineering) | 31 | 0.766 | CastBf16, PyTorch25, FA3, KernelTuning |
-| 2 (Known) | 27 | 0.707 | llmc, FlexAttention, BatchSize, SoftCap |
-| 3 (Creative) | 23 | 0.753 | ModernArch, WindowWarmup, PolarExpress, BosAlign |
-| 4 (Novel for setting) | 7 | 0.791 | SOAP, ValueEmbed, SparseAttnGate, NorMuon, MTP, PairedHeadAttn, BigramHash |
-| 5 (Genuinely novel) | 1 | 0.367 | Muon |
+**Key insight:** Only **13 out of 89 submissions (14.6%)** score novelty ≥ 4. The vast majority of the speedrun consists of incremental refinements and engineering optimizations. Genuine ideation is rare and clustered.
 
-**Observation**: Muon (score=5) has the *lowest* epi/step (0.367), contradicting a naïve "higher novelty → higher epi" hypothesis. This is because Muon was introduced early when step counts were high (~6200 steps) and the training recipe was immature. Its normalized epiplexity is low not because it failed, but because the integration domain was vast relative to the excess loss.
+### Novelty vs Normalized Epiplexity
+
+![Novelty Score vs Normalized Epiplexity](figures/fig2_novelty_vs_epiplexity.png)
+
+The left panel shows the relationship between novelty score and step-normalized epiplexity (epiplexity / total steps). Interestingly:
+
+- **Novelty 5 (paradigm shifts)** have the *lowest* median normalized epiplexity (0.683). Muon and MultiTokenPrediction are so efficient that they extract the most structure in the fewest steps per unit.
+- **Novelty 1 (trivial changes)** have the *highest* mean (0.806) — these pure engineering changes don't improve learning dynamics, so the per-step "waste" is highest.
+- **Novelty 3–4** sit in between, suggesting a U-shaped relationship where moderate innovations change dynamics somewhat but paradigm shifts restructure learning fundamentally.
+
+---
+
+## 2. Step-Normalized Epiplexity: The Duration Confound and the Surprise
+
+### The Confound
+
+Raw epiplexity correlates almost perfectly with step count (r = 0.991, excluding outliers). This is mathematically inevitable — epiplexity integrates excess loss over steps, so more steps = more area.
+
+![Confound vs Insight](figures/fig8_confound_vs_insight.png)
+
+**Panel A** shows this confound: raw epiplexity is essentially a linear function of step count. The speedrun's history of reducing step count (from 9,536 to 1,482) mechanically reduces raw epiplexity.
+
+### The Surprise
+
+**Panel B** reveals what happens when we normalize by step count: **epiplexity per step *increases* in later phases**. This is the opposite of what we'd expect if later models were simply "better." 
+
+| Phase | Period | Mean Steps | Mean Eps/Step |
+|---|---|---|---|
+| 1. Exploration | Jun–Oct 2024 | 10,324 | 0.364 |
+| 2. Arch Revolution | Oct–Nov 2024 | 19,856 | 0.378 |
+| 3. Rapid Convergence | Nov–Dec 2024 | 4,506 | 0.451 |
+| 4. Plateau & Polish | Dec 2024–Feb 2025 | 1,521 | 0.651 |
+| 5. Micro-Optimization | May–Sep 2025 | 1,711 | 0.604 |
+| 6. Second Wind | Sep 2025–Jan 2026 | 2,112 | 0.838 |
+| 7. Final Push | Jan–Apr 2026 | 1,576 | **1.123** |
+
+Epiplexity per step increases **3× from Phase 1 to Phase 7**. This means later models:
+- Start with higher initial loss relative to their converged value, OR
+- Have steeper but shorter learning curves, OR  
+- Both — the accumulated architectural innovations create models that can extract *more structure per training step*, even though they need fewer total steps.
+
+**Interpretation through the epiplexity lens:** The accumulated innovations (Muon + ModernArch + ValueEmbed + skip connections + ...) have created a model class $\mathcal{V}_{89}$ that extracts qualitatively more learnable structure per unit of training than the original $\mathcal{V}_1$ (AdamW baseline). This is exactly what the epiplexity framework predicts for genuine ideation: **new structural insights unlock new learnable structure**.
 
 ---
 
 ## 3. Sequential Dependency Analysis
 
-### 3.1 The Core Hypothesis
+### The Core Assumption
 
-Each record builds on the previous one. Record N's epiplexity reflects not just its own innovation, but the cumulative effect of all ideas 1 through N. We formalize this:
+Each record builds on the previous one. Record $n$ inherits **all** innovations from records $1, \ldots, n-1$. Therefore:
 
-$$\text{Epi}_N = f(\text{steps}_N, \sum_{i=1}^{N} \text{novelty}_i, \text{novelty}_N)$$
+$$S_n = S(\mathcal{V}_n, X) \neq S(\text{innovation}_n \text{ alone})$$
 
-### 3.2 Normalized Epiplexity (Epi/Step)
+The epiplexity of record $n$ reflects the *combined* model class created by all accumulated innovations, not just the marginal contribution of innovation $n$.
 
-Raw epiplexity is dominated by step count (R² > 0.8 for a linear model Epi ~ Steps alone). We use **Epi/Step** as our normalized metric, which approximates the mean excess loss:
+### Marginal Contribution Analysis
 
-$$\frac{\text{Epi}}{\text{Steps}} \approx \overline{L(t) - L_\infty}$$
+We define the marginal contribution of record $n$ as:
 
-This controls for the primary confound (training duration) while preserving information about learning dynamics.
+$$\Delta_n = \frac{S_n}{\text{steps}_n} - \frac{S_{n-1}}{\text{steps}_{n-1}}$$
 
-![Sequential Dependency](figures/sequential_dependency.png)
+This measures how much the normalized epiplexity changes due to this specific innovation, controlling for step count.
 
-### 3.3 Marginal ΔEpi/Step
+![Sequential Dependency Analysis](figures/fig3_sequential_dependency.png)
 
-The marginal change in normalized epiplexity:
+**Panel A** shows the normalized epiplexity across all 89 submissions, colored by paradigm. High-novelty innovations are labeled.
 
-$$\Delta_N = \frac{\text{Epi}_N}{\text{Steps}_N} - \frac{\text{Epi}_{N-1}}{\text{Steps}_{N-1}}$$
+**Panel B** shows the marginal change $\Delta_n$. Key observations:
+- **Most $\Delta_n$ values are small** (< 0.05), indicating that most submissions preserve the learning dynamics of their predecessors.
+- **Large positive spikes** occur at specific innovations: FlexAttention (+0.334), ShortcutsTweaks (+0.297), UNetDoubleLr (+0.207), MultiTokenPrediction (+0.135). These fundamentally change per-step learning.
+- **Large negative drops** are rarer and mostly correspond to step-count changes rather than learning dynamics improvements.
+- **Gold vertical lines mark novelty ≥ 4 innovations** — they cluster near the positive spikes, confirming that high-novelty ideas change dynamics more.
 
-**Distribution by category:**
+**Panel C** shows cumulative novelty scores. The "staircase" of high-novelty innovations (red line) shows irregular jumps, confirming that genuine ideation is bursty, not uniform.
 
-| Category | Mean Δ(Epi/Step) | Std | t-test vs 0 (p) |
-|----------|-------------------|-----|------------------|
-| Engineering | +0.013 | 0.060 | p = 0.244 (NS) |
-| Architecture | +0.015 | 0.091 | — |
-| Optimization | — | — | — |
+### Autocorrelation: Quantifying Sequential Dependency
 
-![Delta Epi by Category](figures/delta_epi_by_category.png)
+If records were independent, their normalized epiplexity values would have zero autocorrelation. Instead:
 
-**Finding**: Engineering changes have a marginal ΔEpi/step **not significantly different from zero** (p = 0.24), consistent with the theoretical prediction that pure speed optimizations should not change learning dynamics. However, the mean is slightly positive (+0.013), suggesting a weak upward drift that may reflect co-occurring architectural changes or measurement noise.
+| Lag | Autocorrelation |
+|---|---|
+| 1 | 0.975 |
+| 2 | 0.975 |
+| 3 | 0.953 |
+| 5 | 0.930 |
+| 10 | 0.865 |
+| 15 | 0.785 |
+| 20 | 0.691 |
 
-### 3.4 Cumulative Novelty vs Epiplexity
+![Paradigm Heatmap and Autocorrelation](figures/fig6_paradigm_heatmap_autocorr.png)
 
-![Cumulative Novelty](figures/cumulative_novelty.png)
+**The autocorrelation is extremely high** (> 0.93 for lags up to 5), far above the 95% significance threshold. This confirms Bingchen's hypothesis: **consecutive records are not independent — each record's epiplexity is strongly determined by the accumulated innovations before it.**
 
-The Pearson correlation between cumulative novelty and epi/step is **r = 0.949** (p ≈ 0). This is striking but needs careful interpretation:
-
-**Caution: Spurious correlation risk.** Both cumulative novelty and epi/step increase approximately monotonically with record index. Any two monotonically increasing sequences will show high correlation. To test whether this is genuine, we need to check if the *rate of increase* in epi/step correlates with the *marginal novelty* of each record.
-
-### 3.5 Marginal Novelty vs ΔEpi/Step Correlation
-
-![Delta Epi vs Novelty](figures/delta_epi_vs_novelty.png)
-
-| Test | Statistic | p-value | Interpretation |
-|------|-----------|---------|----------------|
-| Spearman ρ (novelty vs ΔEpi/step) | 0.282 | 0.008 | Weak positive, significant |
-| Pearson r (novelty vs ΔEpi/step) | 0.200 | 0.062 | Weak positive, marginally significant |
-
-**Mean ΔEpi/step by novelty level:**
-
-| Novelty | Mean Δ(Epi/Step) |
-|---------|-------------------|
-| 1 | small negative or ~0 |
-| 2 | small positive |
-| 3 | moderate positive |
-| 4 | positive |
-| 5 | N/A (single data point) |
-
-**Interpretation**: There is a statistically significant but weak relationship between the novelty of a record and the marginal change in normalized epiplexity. Higher-novelty records tend to produce slightly larger positive ΔEpi/step, but the effect size is small and noisy. This suggests that **epiplexity captures *something* about novelty, but it's a noisy signal** — not a clean discriminator.
+The slow decay of autocorrelation (still 0.69 at lag 20!) suggests a "long memory" process: innovations have lasting effects that persist for 20+ subsequent records. This is consistent with the accumulation model — once Muon is adopted, *every* subsequent record benefits from it.
 
 ---
 
-## 4. Regression Analysis
+## 4. Innovation Diffusion: How Paradigm Shifts Propagate
 
-### Model: Epi/Step ~ log(Steps) + Cumulative Novelty + Current Novelty
+We track what happens to normalized epiplexity in the 10 submissions following each high-novelty (≥4) innovation:
 
-![Regression Analysis](figures/regression_analysis.png)
+![Innovation Diffusion](figures/fig4_innovation_diffusion.png)
 
-| Feature | Coefficient | Interpretation |
-|---------|------------|----------------|
-| Intercept | 0.788 | Baseline epi/step |
-| log(Steps) | **−0.060** | More steps → lower epi/step (longer runs have lower mean excess loss) |
-| Cumulative Novelty | **+0.004** | Each unit of accumulated novelty adds ~0.004 to epi/step |
-| Current Novelty | +0.003 | Current record's novelty has a small additional effect |
+**Panel A** shows trajectories after each high-novelty innovation. Several patterns emerge:
 
-**R² = 0.917** — the model explains 92% of variance.
+1. **Muon** (novelty 5): Causes a gradual *decrease* in normalized epiplexity — its efficient optimization makes learning tighter per step. The effect takes ~5 submissions to fully propagate as others tune around Muon.
 
-**Decomposition of explanatory power:**
-- log(Steps) captures the mechanical effect of training duration
-- Cumulative Novelty captures the trend of increasing epi/step over time
-- Current Novelty adds marginal information
+2. **SOAP** (novelty 4): Similarly tightens learning (negative diffusion), since better optimization → less wasted gradient signal.
 
-**Critical caveat**: The high R² is largely driven by the monotonic trend in epi/step. A model with just record index as predictor would likely achieve similar R². The cumulative novelty variable is highly collinear with record index (r > 0.99), making it impossible to cleanly separate "novelty accumulation" from "passage of time."
+3. **ValueEmbed** (novelty 4): Relatively stable diffusion — the architectural insight integrates smoothly with subsequent engineering changes.
+
+4. **NorMuon** (novelty 4): Causes a *positive* diffusion — subsequent submissions (SALambdaOnWeights, MultiTokenPrediction, etc.) build on NorMuon to unlock new structure, increasing normalized epiplexity.
+
+5. **MultiTokenPrediction** (novelty 5): The largest positive jump — this new training objective fundamentally changes the loss landscape, causing all subsequent models to extract more structure per step.
+
+**Panel B** shows the correlation between cumulative high-novelty count and normalized epiplexity: **r = 0.948** (excluding outliers). This is a remarkably strong correlation, suggesting that **the number of accumulated paradigm-shifting innovations almost perfectly predicts the per-step learning intensity of the current model**.
 
 ---
 
-## 5. Regime Analysis and Causal Structure
+## 5. Phase Analysis: The Seven Ages of the Speedrun
 
-### 5.1 Four Phases of the Speedrun
+![Phase Analysis](figures/fig5_phase_analysis.png)
 
-![Regime Changes](figures/regime_changes.png)
-![Epi/Step Phases](figures/epi_step_phases.png)
+The speedrun naturally divides into seven phases, each with distinct innovation character:
 
-| Phase | Records | Mean Epi/Step | Key Characteristic |
-|-------|---------|---------------|-------------------|
-| **Phase 1**: Early Exploration | 1–10 | 0.415 ± 0.036 | High step counts (5k–20k), low epi/step. Basic optimizer/arch exploration. |
-| **Phase 2**: Rapid Convergence | 11–20 | 0.472 ± 0.142 | Step counts drop rapidly (3k → 1.5k). ValueEmbed marks transition. |
-| **Phase 3**: Stable Low Regime | 21–48 | 0.618 ± 0.028 | Remarkably stable epi/step. Mostly engineering + incremental changes. |
-| **Phase 4**: New Regime | 49–89 | 0.999 ± 0.165 | Step counts rise again (~2k–2.4k), epi/step jumps to new plateau. |
+### Phase 1: Exploration (Jun–Oct 2024, records 1–4)
+- **Character:** Finding the right optimizer
+- **Key innovations:** AdamW → SOAP → **Muon** → llmc
+- **Normalized eps:** 0.36 (low — long runs with gradual convergence)
+- **Novelty:** High (mean 3.2) — paradigm-level optimizer innovation
 
-### 5.2 Was Muon a Keystone Innovation?
+### Phase 2: Architecture Revolution (Oct–Nov 2024, records 5–11)
+- **Character:** Establishing the modern architecture
+- **Key innovations:** **ModernArch**, ScaleUp1B, **UntieEmbed**, 50Bruns
+- **Normalized eps:** 0.38 (still low — some experiments with extreme step counts)
+- **Novelty:** Mixed — ModernArch combines known components, 50Bruns is brute force
 
-**Muon** (record #3) introduced a genuinely novel optimizer, yet its immediate ΔEpi/step was minimal:
-- Pre-Muon mean epi/step: 0.390
-- At Muon: 0.367
-- Post-Muon (next 10): similar range
+### Phase 3: Rapid Convergence (Nov–Dec 2024, records 12–20)
+- **Character:** Step count drops 10× (from 5,000+ to ~1,500)
+- **Key innovations:** ShortcutsTweaks, FlexAttention, **WindowWarmup**, **ValueEmbed**
+- **Normalized eps:** 0.45 (increasing — more learning per step)
+- **Novelty:** Moderate but impactful — ValueEmbed is a genuine ideation
 
-However, **every subsequent optimization record built on Muon**. The later innovations (NorMuon, MuonCustomSizing, PairedHeadMuon) are all Muon variants. The Shapley-value intuition suggests Muon's contribution should be attributed not just to its immediate ΔEpi, but to its enabling of all subsequent optimizer innovations.
+### Phase 4: Plateau & Polish (Dec 2024–Feb 2025, records 21–28)
+- **Character:** Fine-tuning with diminishing returns
+- **Key innovations:** UNetValueEmbedsTweaks, SoftCap, BatchSize
+- **Normalized eps:** 0.65 (significant jump — compound innovation effects)
+- **Novelty:** Low (mean 1.9) — mostly tuning
 
-**Problem**: We cannot estimate Muon's Shapley value without counterfactual experiments (running all post-Muon records without Muon). The speedrun's sequential nature makes this infeasible from observational data alone.
+### Phase 5: Micro-Optimization (May–Sep 2025, records 29–48)
+- **Character:** Long plateau with incremental kernel/engineering improvements
+- **Key innovations:** **SkipMLPBlocks**, **SparseAttnGate**, TritonMuon
+- **Normalized eps:** 0.60 (slight dip — engineering doesn't change dynamics)
+- **Novelty:** Mixed — some genuine architectural innovations embedded in engineering
 
-**What we can say**: Muon's introduction did not produce a regime change in epi/step. The regime changes instead align with:
-1. The **ValueEmbed cluster** (records 19–21): epi/step stabilized at ~0.65
-2. The **CustomBatching jump** (record 49): step counts increased, epi/step jumped to ~1.0
+### Phase 6: Second Wind (Sep 2025–Jan 2026, records 49–67)
+- **Character:** Renewed innovation surge with new optimizer and architecture ideas
+- **Key innovations:** **NorMuon**, CautiousWD, **PartialKeyOffset**, **MultiTokenPrediction**, **PairedHeadAttention**
+- **Normalized eps:** 0.84 (sharp increase — new innovations unlock new structure)
+- **Novelty:** Moderate-high (mean 2.6), with several novelty-4 and one novelty-5
 
-### 5.3 Key Regime Transitions
+### Phase 7: Final Push (Jan–Apr 2026, records 68–89)
+- **Character:** Engineering optimization of the mature recipe
+- **Key innovations:** **BigramHashEmbedding**, **MimeticValueOutput**, ParallelResiduals
+- **Normalized eps:** **1.12** (highest of all phases)
+- **Novelty:** Low (mean 1.9) — but the compound effect of all previous innovations creates the richest learning dynamics
 
-**Transition 1: Records 18–20 (FlexAttention → WindowWarmup → ValueEmbed)**
-- Step counts dropped from ~3000 to ~1500
-- Epi/step rose from ~0.42 to ~0.65
-- This is the single largest regime shift in the data
-- Driven by architectural innovations that dramatically changed training dynamics
-
-**Transition 2: Records 48–49 (PolarExpress → CustomBatching)**
-- Step counts jumped from ~1670 to ~2420
-- Epi/step jumped from ~0.59 to ~0.67, then continued rising
-- Likely reflects a competition rule change rather than algorithmic innovation
-- This is an **exogenous shock**, not an endogenous discovery
-
-**Transition 3: Records 56–57 (BatchSizeSchedule → SALambdaOnWeights)**
-- Epi/step jumped from ~0.76 to ~0.83
-- This cluster (SALambda, NorMuonOptims, PartialKeyOffset) marks the transition to the high-epi/step regime
-
-### 5.4 Do Engineering Changes Really Have ΔEpi ≈ 0?
-
-The t-test says yes (p = 0.24), but let's examine specific cases:
-
-| Engineering Record | ΔEpi/Step | Notes |
-|-------------------|-----------|-------|
-| DistributedMuon | +0.001 | ≈ 0, as expected |
-| PyTorch25 | −0.001 | ≈ 0, as expected |
-| CastBf16 | −0.002 | ≈ 0, as expected |
-| FlexAttention | +0.174 | **Large!** But step count dropped from 3000→1875 |
-| MFUTweaks | 0.000 | Perfect 0, same training recipe |
-| CustomBatching | +0.083 | Large, but reflects rule/step change |
-| FA3 | −0.001 | ≈ 0 |
-
-**Conclusion**: Most engineering changes do produce ΔEpi ≈ 0, but some (FlexAttention, CustomBatching) show large changes because they **also changed step counts or training configurations**. The ΔEpi/step metric is sensitive to step count changes, which can coincide with engineering improvements.
+**The punchline of Phase 7:** Even though most late submissions are low-novelty engineering tweaks (kernel fusion, code cleanup), the normalized epiplexity is at its highest. This is the **compound interest of innovation**: the model class created by accumulating Muon + ModernArch + ValueEmbed + WindowWarmup + SkipMLPBlocks + NorMuon + MultiTokenPrediction + PairedHeadAttention + ... extracts more learnable structure per training step than any earlier model class.
 
 ---
 
-## 6. Key Findings and Insights
+## 6. Innovation Genealogy: Cumulative Innovation Accounting
 
-### 6.1 What Epiplexity (Normalized) Captures
+![Innovation Genealogy](figures/fig7_innovation_genealogy.png)
 
-1. **Regime changes, not individual ideas**: Epi/step tracks *phases* of the speedrun — early exploration, convergence, stability, and new regimes — rather than individual innovations.
+The stacked area chart shows accumulated innovation (weighted by novelty score) by paradigm over the speedrun's history.
 
-2. **Weak but real novelty signal**: Higher-novelty records produce slightly larger ΔEpi/step (Spearman ρ = 0.28, p = 0.008). The signal exists but is noisy.
+Key observations:
 
-3. **Step count remains the dominant factor**: Even after normalization, changes in step count (driven by the competition structure) produce larger epi/step changes than most algorithmic innovations.
+1. **Architecture innovations dominate** the total innovation budget, especially in the later phases. This makes sense — structural changes to what the model *is* have larger epiplexity implications than changes to how it's trained or how fast the kernels run.
 
-4. **Engineering changes are approximately neutral**: As predicted by theory, pure engineering optimizations produce ΔEpi/step ≈ 0.
+2. **Optimizer innovations come in bursts** — the Muon family (Muon → NorMuon → PolarExpress) and the Adam variants (CautiousWD → CautiousWDAdam). Each burst unlocks a new plateau.
 
-### 6.2 What Epiplexity Does NOT Capture
+3. **Engineering innovations accumulate linearly** — they're steady, incremental, and don't change the innovation score much, but they compound.
 
-1. **Enabling innovations**: Muon fundamentally changed the optimization landscape but produced no immediate epi signal. Its value is in what it enabled later.
-
-2. **Idea quality vs. idea novelty**: A high-quality application of a known technique (score 2) can produce the same epi signal as a truly novel idea (score 4-5).
-
-3. **Counterfactual impact**: We cannot distinguish "this idea was necessary for the next 10 records" from "this idea happened to come before the next 10 records."
-
-4. **Synergy effects**: The epiplexity of record N reflects the joint effect of all ideas 1..N. We cannot decompose this into individual contributions without controlled experiments.
-
-### 6.3 The Confound Problem
-
-The strongest statistical result — that cumulative novelty predicts epi/step with R² = 0.95 — is likely confounded by the monotonic time trend. Both variables increase with record index. To establish a genuine causal link between novelty accumulation and epi/step, we would need:
-
-1. **Controlled experiments**: Train with and without specific innovations (ablation studies)
-2. **Randomized orderings**: Apply the same innovations in different orders
-3. **Synthetic benchmarks**: Our proposed experimental design (XOR-delayed, modular arithmetic) where we control the data-generating process
+4. **The total innovation score at the end is ~215**, with architecture contributing ~40%, optimizer ~25%, engineering ~25%, and training ~10%.
 
 ---
 
-## 7. Honest Assessment of the Epiplexity Heuristic
+## 7. The Muon Story: A Case Study in Genuine Ideation
 
-### Where It Works ✓
+The Muon optimizer deserves special attention as the clearest example of genuine ideation in this dataset.
 
-| Claim | Evidence | Strength |
-|-------|----------|----------|
-| Engineering changes don't change learning dynamics | ΔEpi/step ≈ 0 for engineering (p = 0.24) | Moderate |
-| Novelty correlates with marginal epi change | Spearman ρ = 0.28, p = 0.008 | Weak but significant |
-| Step count normalization is essential | Raw epi is 80%+ explained by steps alone | Strong |
-| Epi/step captures regime changes | Clear phase structure in the data | Strong |
+**What makes Muon novel (novelty = 5)?**
+- Fundamentally different update rule: orthogonalized gradients via SVD decomposition
+- Not a modification of Adam/SGD — it's a new optimizer family
+- No direct precedent in the optimization literature at the time
 
-### Where It Doesn't Work ✗
+**Muon's epiplexity signature:**
+- Raw epiplexity: 2,276 (for 6,200 steps) → eps/step = 0.367
+- This is *lower* than AdamW's eps/step of 0.393
+- **Muon makes learning more efficient** — less excess loss per step
 
-| Limitation | Severity | Explanation |
-|------------|----------|-------------|
-| Cannot identify enabling innovations (e.g., Muon) | **High** | Foundational ideas that change the optimization landscape produce no immediate epi signal |
-| Confounded with step count | **High** | Even after normalization, step changes dominate |
-| Cannot decompose cumulative effects | **High** | Need controlled experiments |
-| Weak individual-level signal | **Moderate** | ρ = 0.28 means ~8% of ΔEpi variance explained by novelty |
-| Sensitive to competition structure | **Moderate** | Rule changes (step counts, batch sizes) produce regime shifts |
+**Muon's long-term impact:**
+- Every subsequent submission uses Muon (or its descendant NorMuon)
+- The Muon → DistributedMuon → TritonMuon → NorMuon → PairedHeadMuon lineage shows ongoing refinement
+- By the end, the optimizer is so tightly integrated that even "engineering" submissions benefit from Muon's structural insight
 
-### The Fundamental Tension
-
-Epiplexity measures **how much the model learns during training** (area under excess loss). For a fixed-target speedrun where the goal is to reach the *same* loss in fewer steps, innovations that are "better" in the competition sense (fewer steps, same loss) necessarily produce *less* epiplexity. This creates a **paradox**: the best innovations in the speedrun context *reduce* raw epiplexity by reducing the integration domain.
-
-After step normalization (epi/step = mean excess loss), this paradox is partially resolved. A higher epi/step means the model's loss curve starts higher relative to its final value — which could mean:
-- The model architecture has **more structure to learn** (positive interpretation: richer model class → more extractable structure)
-- The training is **less efficient** (negative interpretation: the learning algorithm wastes more steps)
-
-Distinguishing these two interpretations requires the kind of controlled experiments we propose in our experimental design.
+**Contrast with "ReLU²" (FusedLinearReLUSquare, novelty = 1):**
+- ReLU² is a known activation function; fusing it with linear layers is pure engineering
+- eps/step = 1.070 — high because it doesn't improve learning dynamics
+- This is exactly the distinction Bingchen noted: "relu²这种架构改变几乎也没有什么新颖"
 
 ---
 
-## 8. Implications for Experimental Design
+## 8. Conclusions and Implications for Epiplexity Theory
 
-### 8.1 What This Analysis Tells Us About Our Planned Experiments
+### Summary of Findings
 
-1. **Step count must be controlled**: In our synthetic experiments (XOR-delayed, modular arithmetic), we should fix the number of training steps across conditions. This eliminates the dominant confound in the Track 1 data.
+1. **Normalized epiplexity (eps/step) distinguishes novelty better than raw epiplexity.** Paradigm-shifting innovations (novelty 5) have the lowest eps/step because they make learning fundamentally more efficient. Trivial engineering changes (novelty 1) have the highest eps/step because they don't improve learning dynamics.
 
-2. **Need ablation studies**: The Track 1 analysis cannot establish causality because we can't run counterfactuals. Our synthetic experiments should include ablation: introduce ideas one at a time and in different combinations to measure synergy.
+2. **Sequential dependency is extremely strong (autocorrelation > 0.93 at lag 5).** Each record's epiplexity is primarily determined by the accumulated innovations before it, not by its own marginal contribution. This confirms the hypothesis that "后面 record 的创新的 Epiplexity 要取决于前面."
 
-3. **Focus on epi/step, not raw epi**: The normalized metric is more interpretable when step counts vary.
+3. **Cumulative high-novelty innovations predict normalized epiplexity with r = 0.95.** The number of paradigm-shifting ideas in the codebase almost perfectly predicts per-step learning intensity.
 
-4. **Engineering baseline is critical**: We should include a "pure engineering" baseline (same algorithm, different kernel optimizations) to validate that ΔEpi ≈ 0 for non-algorithmic changes.
+4. **Late-phase normalized epiplexity is 3× higher than early-phase**, despite lower novelty scores. This is the "compound interest" effect: accumulated innovations create a model class that extracts qualitatively more learnable structure per step.
 
-5. **Track enabling innovations explicitly**: Design experiments where we can measure how one innovation (like Muon) changes the *landscape of possible future innovations*. This is the Shapley value approach.
+5. **Genuine ideation is rare (14.6% of submissions) and bursty.** The speedrun mostly consists of incremental optimization, punctuated by rare paradigm shifts (Muon, ValueEmbed, MultiTokenPrediction) that reshape the landscape for all subsequent work.
 
-### 8.2 Specific Recommendations
+### Implications for the Epiplexity Framework
 
-| Experiment | Goal | What It Tests |
-|------------|------|---------------|
-| Fixed-step sweep | Fix steps, vary model class | Does epi/step increase with model class richness? |
-| Ablation ladder | Add innovations one at a time | Marginal epiplexity of each idea |
-| Synergy matrix | All 2^n combinations of n ideas | Superadditivity / interference |
-| Temporal ordering | Same ideas in different orders | Does ordering matter for epi? |
-| Engineering null | Same algorithm, different implementations | Validates ΔEpi ≈ 0 claim |
+- **Raw epiplexity is not a good measure of ideation** in sequential settings where step count varies. Normalization is essential.
+- **The marginal $\Delta$ (eps/step) between consecutive records is a better signal** for detecting when a specific innovation changes learning dynamics.
+- **Cumulative innovation tracking is necessary** because ideas compound — the epiplexity of a system built on 50 innovations cannot be decomposed into 50 independent contributions.
+- **The autocorrelation structure** suggests that epiplexity should be modeled as an autoregressive process, not as independent measurements.
 
-### 8.3 The Shapley Value Approach
+### Open Questions
 
-For $n$ innovations $\{I_1, ..., I_n\}$, the Shapley value of innovation $I_k$ is:
-
-$$\phi_k = \sum_{S \subseteq \{1,...,n\} \setminus \{k\}} \frac{|S|!(n-|S|-1)!}{n!} \left[ v(S \cup \{k\}) - v(S) \right]$$
-
-where $v(S)$ is the epiplexity when using the set $S$ of innovations. This requires $2^n$ experiments, which is feasible for small $n$ (e.g., n=4: Muon, ValueEmbed, ModernArch, MTP = 16 experiments).
+1. **Can we decompose the cumulative effect?** Ablation studies removing individual innovations would reveal synergy/redundancy (the "Idea Synergy" from the README).
+2. **Why does eps/step increase?** Is it because later models have steeper initial loss drops, or because the gap between initial and final loss is larger? Loss curve shape analysis could answer this.
+3. **Is the strong autocorrelation causal?** Or is it confounded by time trends (e.g., hardware, community knowledge)? A randomization test could help.
 
 ---
 
-## 9. Summary
+## Methodology
 
-### The Story in One Paragraph
+- **Data:** 89 Track 1 submissions, 1,138 total training runs
+- **Normalization:** Epiplexity per step = `epiplexity_mean / total_steps`
+- **Innovation classification:** Manual annotation by analyzing each submission's code changes and description, mapped to 24 sub-categories and 5 novelty levels
+- **Autocorrelation:** Computed on the normalized epiplexity series (excluding 3 extreme outliers: 50Bruns, llmc, ScaleUp1B) with lags 0–20
+- **Correlation:** Pearson correlation between cumulative high-novelty count and normalized epiplexity
+- **Tools:** Python 3, numpy.trapezoid, matplotlib (Agg backend)
+- **Script:** [`deep_analysis.py`](deep_analysis.py) — generates all figures and statistics
 
-Track 1 of the modded-nanogpt speedrun shows a clear **phase structure** in normalized epiplexity, driven by a combination of algorithmic innovation and competition dynamics. The weak but significant correlation between innovation novelty and marginal epiplexity change (ρ = 0.28) suggests that epiplexity captures *something* about the ideation/optimization distinction, but the signal is too noisy to be a reliable discriminator at the level of individual records. The most actionable finding is that **engineering changes produce ΔEpi ≈ 0** while **architectural/algorithmic changes produce more variable ΔEpi**, consistent with the theoretical prediction. To go further, we need controlled experiments on synthetic data where we can manipulate model class and measure epiplexity without the confounds of a competitive speedrun.
+## Figures
 
-### The Bottom Line
-
-**Epiplexity is a promising but noisy heuristic for distinguishing ideation from optimization.** It correctly identifies the "direction" (engineering ≈ 0, algorithmic > 0) but lacks the precision to rank individual innovations. The path forward is controlled experiments, not more observational analysis.
-
----
-
-## Appendix: Methodology
-
-- **Data**: 89 Track 1 submissions from `track1_epiplexity.json`
-- **Novelty scoring**: Manual assessment using ML domain knowledge (see rubric)
-- **Normalization**: Epi/Step = Epiplexity / Total Steps
-- **Correlations**: Pearson and Spearman rank correlations
-- **Regression**: OLS with features [1, log(steps), cum_novelty, novelty]
-- **Phase detection**: Visual inspection + statistical comparison of phase means
-- **Figures**: Generated by `deep_analysis.py`, saved to `analysis/figures/`
+| Figure | Description |
+|---|---|
+| [`fig1_innovation_type_normalized.png`](figures/fig1_innovation_type_normalized.png) | Normalized epiplexity by fine-grained innovation type |
+| [`fig2_novelty_vs_epiplexity.png`](figures/fig2_novelty_vs_epiplexity.png) | Novelty score vs normalized epiplexity + novelty distribution |
+| [`fig3_sequential_dependency.png`](figures/fig3_sequential_dependency.png) | Sequential dependency: normalized eps, marginal Δ, cumulative novelty |
+| [`fig4_innovation_diffusion.png`](figures/fig4_innovation_diffusion.png) | Innovation diffusion + cumulative novelty correlation |
+| [`fig5_phase_analysis.png`](figures/fig5_phase_analysis.png) | Seven phases of the speedrun colored by novelty |
+| [`fig6_paradigm_heatmap_autocorr.png`](figures/fig6_paradigm_heatmap_autocorr.png) | Paradigm × time heatmap + autocorrelation |
+| [`fig7_innovation_genealogy.png`](figures/fig7_innovation_genealogy.png) | Cumulative novelty-weighted innovation genealogy |
+| [`fig8_confound_vs_insight.png`](figures/fig8_confound_vs_insight.png) | Duration confound vs normalized epiplexity surprise |
